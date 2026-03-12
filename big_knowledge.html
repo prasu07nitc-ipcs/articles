@@ -93,25 +93,48 @@
         </div>
     </header>
 
+     <section id="hero-banner"
+        class="content-section bg-[#0F172A] text-white py-16 px-0 shadow-lg border-b border-teal-500/20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight animate-fade-in">
+                The Intelligence Gap: Validating the Cycle of Tech Adoption
+            </h1>
+            <p class="text-xl text-[#06B6D4] font-light max-w-3xl animate-fade-in" style="animation-delay: 0.1s;">
+                From Data Lakes to Vector Databases: Why storage capabilities historically and currently outpace
+                actionable business intelligence.
+            </p>
+        </div>
+    </section>
+
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- SECTION: EXECUTIVE SUMMARY -->
         <section id="sec-summary" class="content-section animate-fade-in">
-            <div class="mb-10 text-center max-w-3xl mx-auto">
-                <h1 class="text-4xl font-extrabold text-stone-900 tracking-tight sm:text-5xl mb-4">
-                    The Actionable Intelligence Gap
-                </h1>
-                <p class="text-xl text-stone-500">
-                    Validating the cyclic nature of technological adoption: From Data Lakes to Knowledge Vectors.
-                </p>
-            </div>
 
             <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 border-t-4 border-teal-600 mb-8">
-                <h2 class="text-2xl font-bold mb-4 text-stone-800">Hypothesis Validation: <span class="text-teal-700">TRUE</span></h2>
                 <p class="text-lg text-stone-600 leading-relaxed mb-6">
-                    The hypothesis is fundamentally accurate. Technology cycles frequently follow a pattern where <strong>Storage and Retrieval capabilities outpace Orchestration and Action capabilities</strong>. 
+                    The structural asynchrony of technological evolution ensures that infrastructure for capturing resources—whether raw data or distilled knowledge—consistently matures ahead of the reasoning frameworks required for autonomous execution, creating a recursive "utility gap" between information retrieval and actionable business intelligence.
+                    Technology cycles frequently follow a pattern where <strong>Storage and Retrieval capabilities outpace Orchestration and Action capabilities</strong>. 
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                    <h3>
+                        <span class="font-bold text-xl mb-2 text-[#06B6D4]">&#128194; The Big Data Era
+
+                        </span> <strong> (The Past)</strong></span>
+                </h3>
+                    <p class="text-sm text-gray-600">Organizations stockpiled massive volumes of unstructured data in Hadoop clusters <strong>(Data Lakes)</strong>, but lacked the modern analytics tools (like Tableau, dbt, or automated pipelines) to derive business value rapidly.</p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                    <h3>
+                        <span class="font-bold text-xl mb-2 text-[#F59E0B]">&#129302; The Knowledge Era </span>
+                        </span> <strong> (The Present)</strong></span>
+                    </h3>
+                    <p class="text-sm text-gray-600">Today, we can rapidly ingest and retrieve vast organizational knowledge using Vector DBs and RAG. However, the <strong>Agentic AI</strong> required to autonomously execute multi-step workflows based on this knowledge is still immature.</p>
+                </div>
+            </div>
+            
+                <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-stone-50 p-6 rounded-lg border border-stone-200">
                         <div class="text-3xl mb-2 text-amber-600">&#128193;</div>
                         <h3 class="font-bold text-lg mb-2">The Past (Big Data)</h3>
@@ -122,7 +145,7 @@
                         <h3 class="font-bold text-lg mb-2">The Present (Generative AI)</h3>
                         <p class="text-sm text-stone-600">We are highly capable of storing and retrieving unstructured knowledge (Vector DBs, RAG frameworks), but the <strong>Agentic AI</strong> required to autonomously execute multi-step workflows based on this knowledge is still immature.</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -303,6 +326,14 @@
                 btn.classList.remove('tab-active');
             });
 
+            // Toggle Full-Width Hero (only for summary)
+            const hero = document.getElementById('hero-banner');
+            if (tabId === 'summary') {
+                hero.classList.remove('hidden');
+            } else {
+                hero.classList.add('hidden');
+            }
+            
             // Show selected section
             document.getElementById('sec-' + tabId).classList.remove('hidden');
             
