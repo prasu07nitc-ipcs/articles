@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Chosen Palette: Warm Neutrals & Deep Teal -->
     <!-- Application Structure Plan: A thematic, scrollytelling-inspired dashboard. 
          1. Executive Summary: Validates the hypothesis upfront.
@@ -26,10 +27,12 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fafaf9; /* Tailwind stone-50 */
-            color: #292524; /* Tailwind stone-800 */
+            background-color: #fafaf9;
+            /* Tailwind stone-50 */
+            color: #292524;
+            /* Tailwind stone-800 */
         }
-        
+
         /* MANDATORY CHART CONTAINER STYLING */
         .chart-container {
             position: relative;
@@ -37,14 +40,15 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            height: 300px; /* Base height */
+            height: 300px;
+            /* Base height */
             max-height: 400px;
             background-color: white;
             border-radius: 0.5rem;
             padding: 1rem;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
-        
+
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
@@ -55,24 +59,29 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f5f5f4;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #d6d3d1;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #a8a29e;
         }
 
         .tab-active {
-            border-bottom: 2px solid #0f766e; /* teal-700 */
+            border-bottom: 2px solid #0f766e;
+            /* teal-700 */
             color: #0f766e;
             font-weight: 600;
         }
     </style>
 </head>
+
 <body class="antialiased">
 
     <!-- Navigation / Header -->
@@ -84,16 +93,23 @@
                     <span class="font-bold text-xl tracking-tight text-stone-800">Intelligence Paradigm</span>
                 </div>
                 <nav class="hidden md:flex space-x-8">
-                    <button onclick="switchTab('summary')" id="tab-summary" class="tab-btn tab-active px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Hypothesis</button>
-                    <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Historical Precedent</button>
-                    <button onclick="switchTab('current')" id="tab-current" class="tab-btn px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Current Era</button>
-                    <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Comparative Analysis</button>
+                    <button onclick="switchTab('summary')" id="tab-summary"
+                        class="tab-btn tab-active px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Hypothesis</button>
+                    <button onclick="switchTab('history')" id="tab-history"
+                        class="tab-btn px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Historical
+                        Precedent</button>
+                    <button onclick="switchTab('current')" id="tab-current"
+                        class="tab-btn px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Current
+                        Era</button>
+                    <button onclick="switchTab('analysis')" id="tab-analysis"
+                        class="tab-btn px-1 py-4 text-sm font-medium text-stone-500 hover:text-stone-700 focus:outline-none">Comparative
+                        Analysis</button>
                 </nav>
             </div>
         </div>
     </header>
 
-     <section id="hero-banner"
+    <section id="hero-banner"
         class="content-section bg-[#0F172A] text-white py-16 px-0 shadow-lg border-b border-teal-500/20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight animate-fade-in">
@@ -113,27 +129,35 @@
 
             <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 border-t-4 border-teal-600 mb-8">
                 <p class="text-lg text-stone-600 leading-relaxed mb-6">
-                    The structural asynchrony of technological evolution ensures that infrastructure for capturing resources—whether raw data or distilled knowledge—consistently matures ahead of the reasoning frameworks required for autonomous execution, creating a recursive "utility gap" between information retrieval and actionable business intelligence.
-                    Technology cycles frequently follow a pattern where <strong>Storage and Retrieval capabilities outpace Orchestration and Action capabilities</strong>. 
+                    The structural asynchrony of technological evolution ensures that infrastructure for capturing
+                    resources—whether raw data or distilled knowledge—consistently matures ahead of the reasoning
+                    frameworks required for autonomous execution, creating a recursive "utility gap" between information
+                    retrieval and actionable business intelligence.
+                    Technology cycles frequently follow a pattern where <strong>Storage and Retrieval capabilities
+                        outpace Orchestration and Action capabilities</strong>.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                    <h3>
-                        <span class="font-bold text-xl mb-2 text-[#06B6D4]">&#128194; The Big Data Era
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3>
+                            <span class="font-bold text-xl mb-2 text-[#06B6D4]">&#128194; The Big Data Era
 
-                        </span> <strong> (The Past)</strong></span>
-                </h3>
-                    <p class="text-sm text-gray-600">Organizations stockpiled massive volumes of unstructured data in Hadoop clusters <strong>(Data Lakes)</strong>, but lacked the modern analytics tools (like Tableau, dbt, or automated pipelines) to derive business value rapidly.</p>
+                            </span> <strong> (The Past)</strong></span>
+                        </h3>
+                        <p class="text-sm text-gray-600">Organizations stockpiled massive volumes of unstructured data
+                            in Hadoop clusters <strong>(Data Lakes)</strong>, but lacked the modern analytics tools
+                            (like Tableau, dbt, or automated pipelines) to derive business value rapidly.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3>
+                            <span class="font-bold text-xl mb-2 text-[#F59E0B]">&#129302; The Big Knowledge Era </span>
+                            </span> <strong> (The Present)</strong></span>
+                        </h3>
+                        <p class="text-sm text-gray-600">Today, we can rapidly ingest and retrieve vast organizational
+                            knowledge using Vector DBs and RAG. However, the <strong>Agentic AI</strong> required to
+                            autonomously execute multi-step workflows based on this knowledge is still immature.</p>
+                    </div>
                 </div>
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                    <h3>
-                        <span class="font-bold text-xl mb-2 text-[#F59E0B]">&#129302; The Big Knowledge Era </span>
-                        </span> <strong> (The Present)</strong></span>
-                    </h3>
-                    <p class="text-sm text-gray-600">Today, we can rapidly ingest and retrieve vast organizational knowledge using Vector DBs and RAG. However, the <strong>Agentic AI</strong> required to autonomously execute multi-step workflows based on this knowledge is still immature.</p>
-                </div>
-            </div>
-            
+
                 <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-stone-50 p-6 rounded-lg border border-stone-200">
                         <div class="text-3xl mb-2 text-amber-600">&#128193;</div>
@@ -154,7 +178,9 @@
             <div class="mb-8">
                 <h2 class="text-3xl font-bold text-stone-900 mb-2">The Big Data Era (2008 - 2022)</h2>
                 <p class="text-stone-600">
-                    In the early 2010s, the focus was entirely on infrastructure. The ability to capture and store data far exceeded the software capabilities designed to understand it. This created the first "Actionable Intelligence Gap."
+                    In the early 2010s, the focus was entirely on infrastructure. The ability to capture and store data
+                    far exceeded the software capabilities designed to understand it. This created the first "Actionable
+                    Intelligence Gap."
                 </p>
             </div>
 
@@ -163,31 +189,40 @@
                 <div class="chart-container">
                     <canvas id="bigDataChart"></canvas>
                 </div>
-                <p class="text-center text-sm text-stone-500 mt-2">Figure 1: Capability index of Data Storage vs. Business Intelligence tools over time.</p>
+                <p class="text-center text-sm text-stone-500 mt-2">Figure 1: Capability index of Data Storage vs.
+                    Business Intelligence tools over time.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white p-5 rounded shadow-sm border-l-4 border-stone-300 hover:border-teal-500 transition-colors duration-300">
+                <div
+                    class="bg-white p-5 rounded shadow-sm border-l-4 border-stone-300 hover:border-teal-500 transition-colors duration-300">
                     <h4 class="font-bold text-stone-800 mb-1">Phase 1: Accumulation</h4>
-                    <p class="text-sm text-stone-600">Focus on HDFS, MapReduce. Goal was preventing data loss, not immediate insight.</p>
+                    <p class="text-sm text-stone-600">Focus on HDFS, MapReduce. Goal was preventing data loss, not
+                        immediate insight.</p>
                 </div>
-                <div class="bg-white p-5 rounded shadow-sm border-l-4 border-stone-300 hover:border-teal-500 transition-colors duration-300">
+                <div
+                    class="bg-white p-5 rounded shadow-sm border-l-4 border-stone-300 hover:border-teal-500 transition-colors duration-300">
                     <h4 class="font-bold text-stone-800 mb-1">Phase 2: The Swamp</h4>
-                    <p class="text-sm text-stone-600">Data Lakes turned into unmanageable data swamps. Queries took hours; business users were locked out.</p>
+                    <p class="text-sm text-stone-600">Data Lakes turned into unmanageable data swamps. Queries took
+                        hours; business users were locked out.</p>
                 </div>
-                <div class="bg-white p-5 rounded shadow-sm border-l-4 border-stone-300 hover:border-teal-500 transition-colors duration-300">
+                <div
+                    class="bg-white p-5 rounded shadow-sm border-l-4 border-stone-300 hover:border-teal-500 transition-colors duration-300">
                     <h4 class="font-bold text-stone-800 mb-1">Phase 3: The Catch-up</h4>
-                    <p class="text-sm text-stone-600">Rise of Cloud Data Warehouses (Snowflake) and self-service BI finally closed the gap, enabling action.</p>
+                    <p class="text-sm text-stone-600">Rise of Cloud Data Warehouses (Snowflake) and self-service BI
+                        finally closed the gap, enabling action.</p>
                 </div>
             </div>
         </section>
 
         <!-- SECTION: CURRENT ERA -->
         <section id="sec-current" class="content-section hidden">
-             <div class="mb-8">
+            <div class="mb-8">
                 <h2 class="text-3xl font-bold text-stone-900 mb-2">The Big Knowledge Era (2020 onwards)</h2>
                 <p class="text-stone-600">
-                    History repeats. Today, large language models and Retrieval-Augmented Generation (RAG) have solved the problem of "finding" information within unstructured text. However, turning that retrieved knowledge into autonomous, multi-step business actions (Agentic workflows) remains the bottleneck.
+                    History repeats. Today, large language models and Retrieval-Augmented Generation (RAG) have solved
+                    the problem of "finding" information within unstructured text. However, turning that retrieved
+                    knowledge into autonomous, multi-step business actions (Agentic workflows) remains the bottleneck.
                 </p>
             </div>
 
@@ -196,10 +231,11 @@
                 <div class="chart-container">
                     <canvas id="aiEraChart"></canvas>
                 </div>
-                <p class="text-center text-sm text-stone-500 mt-2">Figure 2: Capability index of Knowledge Retrieval (RAG/LLMs) vs. Agentic Workflow Execution.</p>
+                <p class="text-center text-sm text-stone-500 mt-2">Figure 2: Capability index of Knowledge Retrieval
+                    (RAG/LLMs) vs. Agentic Workflow Execution.</p>
             </div>
 
-             <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
                 <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center">
                     <span class="text-teal-600 text-2xl mr-2">&#9881;</span> Where Agentic AI is Lagging
                 </h3>
@@ -207,19 +243,25 @@
                     <li class="flex items-start">
                         <span class="text-amber-500 mr-2 mt-1">&#10006;</span>
                         <div>
-                            <strong class="text-stone-800 text-sm">Reliability & Hallucination in Multi-step logic:</strong> While RAG grounds single queries, chained reasoning by agents often derails over long horizons.
+                            <strong class="text-stone-800 text-sm">Reliability & Hallucination in Multi-step
+                                logic:</strong> While RAG grounds single queries, chained reasoning by agents often
+                            derails over long horizons.
                         </div>
                     </li>
                     <li class="flex items-start">
                         <span class="text-amber-500 mr-2 mt-1">&#10006;</span>
                         <div>
-                            <strong class="text-stone-800 text-sm">Tool Integration Standardisation:</strong> Agents struggle with brittle APIs and non-standardised environments to execute actions (unlike standardized SQL in the Big Data era).
+                            <strong class="text-stone-800 text-sm">Tool Integration Standardisation:</strong> Agents
+                            struggle with brittle APIs and non-standardised environments to execute actions (unlike
+                            standardized SQL in the Big Data era).
                         </div>
                     </li>
                     <li class="flex items-start">
                         <span class="text-amber-500 mr-2 mt-1">&#10006;</span>
                         <div>
-                            <strong class="text-stone-800 text-sm">State Management:</strong> Maintaining context and state across complex, days-long business workflows is currently beyond out-of-the-box LLM capabilities.
+                            <strong class="text-stone-800 text-sm">State Management:</strong> Maintaining context and
+                            state across complex, days-long business workflows is currently beyond out-of-the-box LLM
+                            capabilities.
                         </div>
                     </li>
                 </ul>
@@ -231,43 +273,54 @@
             <div class="mb-8">
                 <h2 class="text-3xl font-bold text-stone-900 mb-2">Architectural Parallels</h2>
                 <p class="text-stone-600">
-                    By comparing the architectures of both eras, we can predict that Agentic AI requires a new layer of infrastructure—equivalent to the "Modern Data Stack"—to become truly viable for business intelligence.
+                    By comparing the architectures of both eras, we can predict that Agentic AI requires a new layer of
+                    infrastructure—equivalent to the "Modern Data Stack"—to become truly viable for business
+                    intelligence.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                
+
                 <!-- Left Column -->
                 <div class="space-y-4">
                     <div class="bg-stone-800 text-white p-4 rounded-t-lg text-center font-bold">
                         The Big Data Stack (c. 2015)
                     </div>
-                    
-                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition" onclick="toggleDetail('bd-storage')">
+
+                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition"
+                        onclick="toggleDetail('bd-storage')">
                         <div class="font-bold text-stone-700">Storage Layer</div>
                         <div class="text-sm text-stone-500">Hadoop / HDFS / S3</div>
-                        <div id="bd-storage-detail" class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
-                            Vast amounts of raw, unformatted data dumped into cheap storage. High capacity, zero intelligence.
+                        <div id="bd-storage-detail"
+                            class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
+                            Vast amounts of raw, unformatted data dumped into cheap storage. High capacity, zero
+                            intelligence.
                         </div>
                     </div>
 
                     <div class="flex justify-center text-stone-400">&#8595;</div>
 
-                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition" onclick="toggleDetail('bd-process')">
+                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition"
+                        onclick="toggleDetail('bd-process')">
                         <div class="font-bold text-stone-700">Processing / Structuring</div>
                         <div class="text-sm text-stone-500">MapReduce / Spark</div>
-                        <div id="bd-process-detail" class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
+                        <div id="bd-process-detail"
+                            class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
                             Heavy computational frameworks required to extract meaning. High barrier to entry.
                         </div>
                     </div>
 
-                    <div class="flex justify-center text-stone-400 font-bold text-xl">&#8595; <span class="text-amber-500 text-sm ml-2">Historical Gap</span></div>
+                    <div class="flex justify-center text-stone-400 font-bold text-xl">&#8595; <span
+                            class="text-amber-500 text-sm ml-2">Historical Gap</span></div>
 
-                    <div class="p-4 bg-teal-50 border border-teal-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-teal-100 transition" onclick="toggleDetail('bd-action')">
+                    <div class="p-4 bg-teal-50 border border-teal-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-teal-100 transition"
+                        onclick="toggleDetail('bd-action')">
                         <div class="font-bold text-teal-800">Action / Intelligence</div>
                         <div class="text-sm text-teal-600">Tableau / Looker / dbt</div>
-                        <div id="bd-action-detail" class="hidden mt-2 text-xs text-teal-700 bg-teal-100/50 p-2 rounded text-left">
-                            The eventual solution: User-friendly interfaces bridging the gap between raw data and business decisions.
+                        <div id="bd-action-detail"
+                            class="hidden mt-2 text-xs text-teal-700 bg-teal-100/50 p-2 rounded text-left">
+                            The eventual solution: User-friendly interfaces bridging the gap between raw data and
+                            business decisions.
                         </div>
                     </div>
                 </div>
@@ -277,40 +330,57 @@
                     <div class="bg-teal-800 text-white p-4 rounded-t-lg text-center font-bold">
                         The AI Knowledge Stack (Current)
                     </div>
-                    
-                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition" onclick="toggleDetail('ai-storage')">
+
+                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition"
+                        onclick="toggleDetail('ai-storage')">
                         <div class="font-bold text-stone-700">Storage Layer</div>
                         <div class="text-sm text-stone-500">Vector Databases (Pinecone, Milvus)</div>
-                        <div id="ai-storage-detail" class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
+                        <div id="ai-storage-detail"
+                            class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
                             Vast amounts of unstructured text embedded into high-dimensional space for semantic search.
                         </div>
                     </div>
 
                     <div class="flex justify-center text-stone-400">&#8595;</div>
 
-                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition" onclick="toggleDetail('ai-process')">
+                    <div class="p-4 bg-white border border-stone-200 rounded shadow-sm text-center relative cursor-pointer hover:bg-stone-50 transition"
+                        onclick="toggleDetail('ai-process')">
                         <div class="font-bold text-stone-700">Retrieval / Generation</div>
                         <div class="text-sm text-stone-500">RAG Pipelines / LLMs (GPT-4)</div>
-                        <div id="ai-process-detail" class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
+                        <div id="ai-process-detail"
+                            class="hidden mt-2 text-xs text-stone-600 bg-stone-100 p-2 rounded text-left">
                             Highly matured ability to find relevant information and synthesize text. High speed.
                         </div>
                     </div>
 
-                    <div class="flex justify-center text-stone-400 font-bold text-xl">&#8595; <span class="text-amber-500 text-sm ml-2">Current Gap</span></div>
+                    <div class="flex justify-center text-stone-400 font-bold text-xl">&#8595; <span
+                            class="text-amber-500 text-sm ml-2">Current Gap</span></div>
 
-                    <div class="p-4 bg-amber-50 border border-amber-200 rounded shadow-sm text-center border-dashed relative cursor-pointer hover:bg-amber-100 transition" onclick="toggleDetail('ai-action')">
+                    <div class="p-4 bg-amber-50 border border-amber-200 rounded shadow-sm text-center border-dashed relative cursor-pointer hover:bg-amber-100 transition"
+                        onclick="toggleDetail('ai-action')">
                         <div class="font-bold text-amber-800">Action / Intelligence</div>
                         <div class="text-sm text-amber-600">Agentic Orchestration Frameworks</div>
-                        <div id="ai-action-detail" class="hidden mt-2 text-xs text-amber-800 bg-amber-100/50 p-2 rounded text-left">
-                            The missing link: Reliable, multi-step autonomous agents that can trigger workflows across enterprise systems based on retrieved knowledge.
+                        <div id="ai-action-detail"
+                            class="hidden mt-2 text-xs text-amber-800 bg-amber-100/50 p-2 rounded text-left">
+                            The missing link: Reliable, multi-step autonomous agents that can trigger workflows across
+                            enterprise systems based on retrieved knowledge.
                         </div>
                     </div>
                 </div>
 
             </div>
             <p class="text-center text-sm text-stone-500 mt-6 italic">Click elements above to explore details.</p>
-        </section>
 
+            <div style="margin-top: 10px;" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <a href="/articles/pdf/big_knowledge.pdf" target="_blank"
+                    class="inline-block border border-[#C05640] text-[#C05640] font-bold py-3 px-8 rounded hover:bg-[#C05640] hover:text-white transition cursor-pointer">
+                    View Full Report
+                </a>
+            </div>
+
+        </section>
+        
+       
     </main>
 
     <script>
@@ -320,7 +390,7 @@
             document.querySelectorAll('.content-section').forEach(sec => {
                 sec.classList.add('hidden');
             });
-            
+
             // Remove active class from all tabs
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('tab-active');
@@ -333,10 +403,10 @@
             } else {
                 hero.classList.add('hidden');
             }
-            
+
             // Show selected section
             document.getElementById('sec-' + tabId).classList.remove('hidden');
-            
+
             // Set active class on clicked tab
             document.getElementById('tab-' + tabId).classList.add('tab-active');
 
@@ -360,7 +430,7 @@
         }
 
         // --- Chart Configurations (Chart.js) ---
-        
+
         // Common Options for styling
         const commonOptions = {
             responsive: true,
@@ -409,7 +479,7 @@
         let bdChartInstance = null;
         function renderBigDataChart() {
             const ctx = document.getElementById('bigDataChart').getContext('2d');
-            
+
             if (bdChartInstance) { bdChartInstance.destroy(); }
 
             bdChartInstance = new Chart(ctx, {
@@ -452,7 +522,7 @@
         let aiChartInstance = null;
         function renderAiChart() {
             const ctx = document.getElementById('aiEraChart').getContext('2d');
-            
+
             if (aiChartInstance) { aiChartInstance.destroy(); }
 
             aiChartInstance = new Chart(ctx, {
@@ -490,4 +560,5 @@
         // No charts needed on initial load for 'summary' tab.
     </script>
 </body>
+
 </html>
