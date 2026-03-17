@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolution of Business Models for Information Trade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom styles to supplement Tailwind and ensure strict layout controls */
+        body {
+            background-color: #FAFAF9; /* warm neutral background - stone-50 */
+            color: #292524; /* stone-800 text */
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .font-serif-custom {
+            font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 500px;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+                padding: 0.5rem;
+            }
+        }
+
+        /* Interactive Timeline specific styles */
+        .timeline-btn.active {
+            background-color: #D97706; /* amber-600 */
+            color: white;
+            border-color: #D97706;
+            transform: scale(1.05);
+        }
+
+        /* Business Model Card styles */
+        .model-card.active {
+            border-color: #059669; /* emerald-600 */
+            background-color: #ECFDF5; /* emerald-50 */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        /* Hide scrollbar for clean horizontal scrolling in timeline if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Chosen Palette: Warm Neutrals with Amber and Emerald Accents (Stone, Amber, Emerald, Slate) -->
+<!-- Application Structure Plan: Linear Storytelling with Interactive Nodes. The application is structured chronologically and analytically. It starts with an overarching introduction, moves into a historical timeline (interactive content swapping), presents quantitative market shifts (interactive area chart), details current models (exploratory grid/detail view), and concludes with future trends (radar chart). This structure was chosen because understanding 'evolution' requires a temporal anchor, followed by the hard data proving the shift, and finally a deep dive into the current and future landscape. -->
+<!-- Visualization & Content Choices: 
+  1. Timeline (History) -> Goal: Inform -> Viz: Interactive HTML Buttons/Text Box -> Justification: Allows user to pace their journey through eras.
+  2. Revenue Shift (Data) -> Goal: Compare/Change -> Viz: Chart.js Stacked Area Chart -> Justification: Best shows the decline of one revenue source (ads/print) and the rise of others (data/API) over time.
+  3. Current Models (Categorization) -> Goal: Organize -> Viz: Interactive Grid with Detail Panel -> Justification: Breaks down dense descriptive text into digestible, user-triggered chunks. 
+  4. Future Landscape (Analysis) -> Goal: Compare -> Viz: Chart.js Radar Chart -> Justification: Effectively compares multivariate shifts between traditional publishers and modern data brokers.
+  All choices confirm NO SVG/Mermaid. 
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. Unicode characters are used for iconography. -->
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 font-serif-custom font-bold text-xl text-stone-800 tracking-tight">
+                    InfoTrade<span class="text-amber-600">Evolution</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#introduction" class="text-sm font-medium text-stone-600 hover:text-amber-600 transition-colors">Intro</a>
+                    <a href="#timeline" class="text-sm font-medium text-stone-600 hover:text-amber-600 transition-colors">Timeline</a>
+                    <a href="#revenue-shift" class="text-sm font-medium text-stone-600 hover:text-amber-600 transition-colors">Revenue Shifts</a>
+                    <a href="#models" class="text-sm font-medium text-stone-600 hover:text-amber-600 transition-colors">Core Models</a>
+                    <a href="#future" class="text-sm font-medium text-stone-600 hover:text-amber-600 transition-colors">The Future</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header id="introduction" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
+        <!-- <div class="inline-block p-3 bg-amber-100 text-amber-800 rounded-full mb-6 text-2xl shadow-sm">
+            &#128200; 
+        </div> -->
+        <h1 class="text-4xl md:text-5xl font-serif-custom font-extrabold text-stone-900 mb-6 leading-tight">
+            The Evolution of Business Models for Information Trade
+        </h1>
+        <p class="text-lg md:text-xl text-stone-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Information has transformed from a scarce physical commodity to a ubiquitous digital resource. This report analyzes how businesses have adapted their monetization strategies—shifting from selling access to selling insights, APIs, and synthesized intelligence.
+        </p>
+        <!-- <div class="flex flex-wrap justify-center gap-4 text-sm font-medium text-stone-500">
+            <span class="bg-stone-200 px-3 py-1 rounded-full">Report Synthesis</span>
+            <span class="bg-stone-200 px-3 py-1 rounded-full">Interactive Analysis</span>
+            <span class="bg-stone-200 px-3 py-1 rounded-full">Market Trends</span>
+        </div> -->
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-24">
+
+        <!-- Section 1: Interactive Timeline -->
+        <section id="timeline" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-serif-custom font-bold text-stone-800 mb-4 border-b-2 border-amber-500 inline-block pb-1">The Evolutionary Timeline</h2>
+                <p class="text-stone-600 max-w-2xl leading-relaxed">
+                    <strong>Context:</strong> To understand modern information trade, we must look at its history. This section outlines the major eras of data commodification. <br>
+                    <strong>Interaction:</strong> Click on the historical eras below to explore how the primary medium and business model shifted over the decades.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 md:p-8">
+                <!-- Timeline Controls -->
+                <div class="flex overflow-x-auto no-scrollbar gap-4 pb-4 mb-6 border-b border-stone-100" id="timeline-controls">
+                    <!-- Buttons injected via JS -->
+                </div>
+                
+                <!-- Timeline Content Display -->
+                <div id="timeline-content" class="min-h-[200px] flex flex-col justify-center transition-opacity duration-300">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Quantitative Revenue Shift (Chart.js) -->
+        <section id="revenue-shift" class="scroll-mt-24 bg-stone-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-10 text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl font-serif-custom font-bold text-stone-800 mb-4">The Great Revenue Migration (2005 - 2025)</h2>
+                    <p class="text-stone-600 leading-relaxed">
+                        <strong>Context:</strong> As the medium changed, so did the money. This chart visualizes the global shift in information industry revenue sources over the past 20 years. Notice the plateau of advertising and the explosive growth of raw data and API licensing.<br>
+                        <strong>Interaction:</strong> Hover over the chart areas to see exact revenue proportions for specific years. Click the legend items to toggle data series.
+                    </p>
+                </div>
+
+                <!-- REQUIRED CHART CONTAINER -->
+                <div class="chart-container">
+                    <canvas id="revenueShiftChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Core Business Models Explorer -->
+        <section id="models" class="scroll-mt-24">
+            <div class="mb-10">
+                <h2 class="text-3xl font-serif-custom font-bold text-stone-800 mb-4 border-b-2 border-emerald-500 inline-block pb-1">Taxonomy of Modern Information Models</h2>
+                <p class="text-stone-600 max-w-3xl leading-relaxed">
+                    <strong>Context:</strong> Today, "selling information" is rarely a one-size-fits-all approach. Companies utilize hybrid strategies based on the nature of their data (latency, volume, exclusivity).<br>
+                    <strong>Interaction:</strong> Select a business model card from the grid to reveal an in-depth analysis, including mechanics, pros, cons, and real-world examples.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Selectors -->
+                <div class="lg:col-span-1 flex flex-col gap-3" id="model-selector">
+                    <!-- Cards injected via JS -->
+                </div>
+
+                <!-- Detail View -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-md border border-stone-200 p-6 md:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-16 bg-emerald-50 rounded-bl-[100px] -z-10 opacity-50"></div>
+                    <div id="model-detail-content" class="z-10">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Future Trajectory (Radar Chart) -->
+        <section id="future" class="scroll-mt-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-serif-custom font-bold text-stone-800 mb-4 border-b-2 border-blue-500 inline-block pb-1">The Future of Data Value</h2>
+                    <p class="text-stone-600 leading-relaxed mb-6">
+                        <strong>Context:</strong> As Artificial Intelligence becomes the primary consumer of data, the value paradigm is shifting from human-readable content to machine-readable, high-velocity data streams.<br>
+                        <strong>Interaction:</strong> This radar chart compares the attributes prioritized by Traditional Publishers vs. Modern AI-Era Data Brokers. Hover over the points to see the specific focus intensity.
+                    </p>
+                    <ul class="space-y-4 text-stone-700">
+                        <li class="flex items-start">
+                            <span class="mr-3 text-xl">&#128640;</span>
+                            <span><strong>Rise of B2M (Business-to-Machine):</strong> APIs designed specifically for LLM ingestion will outpace human-facing portals.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-3 text-xl">&#128274;</span>
+                            <span><strong>Privacy Premium:</strong> Clean, ethically sourced, and zero-party data will command a massive premium over scraped data.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-3 text-xl">&#9201;</span>
+                            <span><strong>Real-time Dominance:</strong> Stale data loses value exponentially; real-time event streaming becomes the standard.</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- REQUIRED CHART CONTAINER -->
+                <div class="chart-container shadow-none bg-transparent">
+                    <canvas id="futureRadarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-12 text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <h3 class="font-serif-custom text-2xl text-stone-100 mb-4">Conclusion</h3>
+            <p class="mb-8 leading-relaxed">
+                The evolution of information trade is marked by a transition from scarcity to abundance, and now, to algorithmic synthesis. The most successful future business models will not just sell data, but will sell context, real-time access, and structured intelligence tailored for AI consumption.
+            </p>
+            <a href="/articles/pdf/information_trade.pdf" target="_blank"
+                class="inline-block border border-[#C05640] text-[#C05640] font-bold py-3 px-8 rounded hover:bg-[#C05640] hover:text-white transition cursor-pointer">
+                View Full Report
+            </a>
+            <!-- <p class="text-sm">
+                Interactive SPA generated based on "Evolution of business models for information trade" report concepts.<br>
+                &#169; 2026 Information Architecture Demo.
+            </p> -->
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // ==========================================
+            // STATE & DATA STORAGE
+            // ==========================================
+
+            // 1. Timeline Data
+            const timelineData = [
+                { id: '1990s', year: '1990s', title: 'The Physical Era', icon: '&#128218;', desc: 'Information was bound to physical mediums (books, CD-ROMs, printed reports). The business model was straightforward: high unit cost, single transaction sales. Scarcity was the primary driver of value.' },
+                { id: '2000s', year: '2000s', title: 'The Ad-Supported Web', icon: '&#128187;', desc: 'The rise of Web 1.0/2.0 made information distribution nearly free. Businesses adopted the "Eyeballs" model. Information was given away for free to aggregate audiences, which were then sold to advertisers.' },
+                { id: '2010s', year: '2010s', title: 'Subscriptions & Freemium', icon: '&#128273;', desc: 'As ad blockers rose and ad yields dropped, high-quality information shifted behind paywalls. The "Freemium" model emerged, offering basic info for free while charging recurring subscriptions for premium insights.' },
+                { id: '2020s', year: '2020s', title: 'APIs & Data Marketplaces', icon: '&#128423;', desc: 'Information became unbundled. Instead of human-readable reports, businesses began selling raw data streams, API access, and structured datasets to other businesses for programmatic use.' },
+                { id: 'future', year: 'Future', title: 'AI & Synthesized Intelligence', icon: '&#129302;', desc: 'The transition from Business-to-Human (B2H) to Business-to-Machine (B2M). The value lies in licensing high-fidelity, real-time data specifically for training and grounding Large Language Models.' }
+            ];
+
+            // 2. Revenue Shift Data (For Chart.js Area Chart)
+            const revenueData = {
+                labels: ['2005', '2009', '2013', '2017', '2021', '2025'],
+                datasets: [
+                    {
+                        label: 'Physical / Print',
+                        data: [60, 45, 25, 10, 5, 2],
+                        borderColor: '#d6d3d1', // stone-300
+                        backgroundColor: 'rgba(214, 211, 209, 0.5)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Ad-Supported',
+                        data: [30, 40, 45, 40, 35, 28],
+                        borderColor: '#9ca3af', // gray-400
+                        backgroundColor: 'rgba(156, 163, 175, 0.5)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Subscriptions',
+                        data: [10, 12, 20, 30, 35, 30],
+                        borderColor: '#f59e0b', // amber-500
+                        backgroundColor: 'rgba(245, 158, 11, 0.5)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Data / API Licensing',
+                        data: [0, 3, 10, 20, 25, 40],
+                        borderColor: '#10b981', // emerald-500
+                        backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            };
+
+            // 3. Business Models Data
+            const businessModels = [
+                {
+                    id: 'ad-driven',
+                    name: 'Ad-Supported / Attention',
+                    icon: '&#128227;',
+                    headline: 'Monetizing user attention rather than the information itself.',
+                    mechanics: 'Content is provided completely free of charge. The platform collects user demographic and behavioral data, selling targeted inventory to advertisers.',
+                    pros: 'Maximizes reach and virality; low barrier to entry for users.',
+                    cons: 'Requires massive scale; creates incentives for clickbait; highly vulnerable to privacy regulations (GDPR, cookie deprecation).',
+                    example: 'Social Media platforms, Free News Aggregators.'
+                },
+                {
+                    id: 'subscription',
+                    name: 'Premium Subscription',
+                    icon: '&#128179;',
+                    headline: 'Recurring revenue for continuous access to high-value insights.',
+                    mechanics: 'Users pay a recurring fee (monthly/annually) for exclusive, ad-free, or specialized content. Often relies on a "paywall".',
+                    pros: 'Predictable recurring revenue; aligns business incentives with content quality rather than click volume.',
+                    cons: 'High barrier to user acquisition; requires constant generation of perceived value to prevent churn.',
+                    example: 'Financial Times, Specialized Industry Newsletters.'
+                },
+                {
+                    id: 'freemium',
+                    name: 'Freemium & Tiered',
+                    icon: '&#9878;',
+                    headline: 'Hook them with free, monetize the power users.',
+                    mechanics: 'Basic information or tools are free, but advanced features, deeper historical data, or export capabilities require a paid upgrade.',
+                    pros: 'Excellent lead generation; allows users to experience value before committing financially.',
+                    cons: 'Complex to balance the "free" vs "paid" boundary; low conversion rates (typically 2-5%).',
+                    example: 'Financial charting tools, Basic market research platforms.'
+                },
+                {
+                    id: 'api-data',
+                    name: 'API & Data Brokerage',
+                    icon: '&#128190;',
+                    headline: 'Machine-to-machine data trade.',
+                    mechanics: 'Information is structured, cleaned, and served programmatically via APIs or bulk database dumps to other enterprises for integration into their own systems.',
+                    pros: 'Extremely sticky revenue; high margins; scalable without human UI overhead.',
+                    cons: 'Requires pristine data quality and high uptime infrastructure; complex B2B sales cycles.',
+                    example: 'Bloomberg Terminals/APIs, Weather Data providers.'
+                }
+            ];
+
+
+            // ==========================================
+            // UI INITIALIZATION & LOGIC
+            // ==========================================
+
+            // --- 1. Initialize Timeline ---
+            const timelineControlsDiv = document.getElementById('timeline-controls');
+            const timelineContentDiv = document.getElementById('timeline-content');
+
+            function renderTimelineContent(id) {
+                const data = timelineData.find(d => d.id === id);
+                timelineContentDiv.style.opacity = 0;
+                
+                setTimeout(() => {
+                    timelineContentDiv.innerHTML = `
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-4xl bg-stone-100 p-4 rounded-full">${data.icon}</span>
+                            <div>
+                                <h3 class="text-2xl font-serif-custom font-bold text-stone-800">${data.title}</h3>
+                                <span class="text-amber-600 font-bold uppercase tracking-wider text-sm">${data.year}</span>
+                            </div>
+                        </div>
+                        <p class="text-stone-700 text-lg leading-relaxed">${data.desc}</p>
+                    `;
+                    timelineContentDiv.style.opacity = 1;
+                }, 150);
+
+                // Update active states
+                document.querySelectorAll('.timeline-btn').forEach(btn => {
+                    if(btn.dataset.id === id) {
+                        btn.classList.add('active', 'bg-amber-600', 'text-white', 'border-amber-600', 'scale-105');
+                        btn.classList.remove('bg-white', 'text-stone-600', 'border-stone-200');
+                    } else {
+                        btn.classList.remove('active', 'bg-amber-600', 'text-white', 'border-amber-600', 'scale-105');
+                        btn.classList.add('bg-white', 'text-stone-600', 'border-stone-200');
+                    }
+                });
+            }
+
+            timelineData.forEach((item, index) => {
+                const btn = document.createElement('button');
+                btn.className = `timeline-btn px-6 py-3 rounded-full border border-stone-200 bg-white text-stone-600 font-medium transition-all whitespace-nowrap hover:border-amber-400 hover:text-amber-700 focus:outline-none`;
+                btn.dataset.id = item.id;
+                btn.innerText = item.year;
+                btn.addEventListener('click', () => renderTimelineContent(item.id));
+                timelineControlsDiv.appendChild(btn);
+            });
+            // Set initial timeline state
+            renderTimelineContent(timelineData[0].id);
+
+
+            // --- 2. Initialize Core Models UI ---
+            const modelSelectorDiv = document.getElementById('model-selector');
+            const modelDetailDiv = document.getElementById('model-detail-content');
+
+            function renderModelDetail(id) {
+                const model = businessModels.find(m => m.id === id);
+                
+                // Animate out
+                modelDetailDiv.style.opacity = 0;
+                modelDetailDiv.style.transform = "translateY(10px)";
+                modelDetailDiv.style.transition = "all 0.2s ease-out";
+
+                setTimeout(() => {
+                    modelDetailDiv.innerHTML = `
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="text-5xl">${model.icon}</span>
+                            <h3 class="text-3xl font-serif-custom font-bold text-stone-800">${model.name}</h3>
+                        </div>
+                        <p class="text-xl text-emerald-700 font-medium mb-8 leading-snug">${model.headline}</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">How it Works</h4>
+                                <p class="text-stone-700 leading-relaxed">${model.mechanics}</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-stone-50 p-4 rounded-lg border border-stone-100">
+                                    <h4 class="text-sm font-bold text-emerald-600 uppercase tracking-wider mb-2 flex items-center gap-2"><span>&#10133;</span> Pros</h4>
+                                    <p class="text-stone-600 text-sm">${model.pros}</p>
+                                </div>
+                                <div class="bg-stone-50 p-4 rounded-lg border border-stone-100">
+                                    <h4 class="text-sm font-bold text-red-600 uppercase tracking-wider mb-2 flex items-center gap-2"><span>&#10134;</span> Cons</h4>
+                                    <p class="text-stone-600 text-sm">${model.cons}</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-6 border-t border-stone-100">
+                                <span class="text-sm font-bold text-stone-500 uppercase mr-2">Classic Example:</span>
+                                <span class="text-stone-800 font-medium">${model.example}</span>
+                            </div>
+                        </div>
+                    `;
+                    // Animate in
+                    modelDetailDiv.style.opacity = 1;
+                    modelDetailDiv.style.transform = "translateY(0)";
+                }, 200);
+
+                // Update active button styles
+                document.querySelectorAll('.model-card').forEach(card => {
+                    if(card.dataset.id === id) {
+                        card.classList.add('active', 'border-emerald-500', 'bg-emerald-50');
+                        card.classList.remove('border-stone-200', 'bg-white');
+                    } else {
+                        card.classList.remove('active', 'border-emerald-500', 'bg-emerald-50');
+                        card.classList.add('border-stone-200', 'bg-white');
+                    }
+                });
+            }
+
+            businessModels.forEach(model => {
+                const card = document.createElement('div');
+                card.className = `model-card cursor-pointer border border-stone-200 bg-white p-5 rounded-xl transition-all duration-200 hover:shadow-md hover:border-emerald-300`;
+                card.dataset.id = model.id;
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">${model.icon}</span>
+                        <h4 class="font-bold text-stone-800">${model.name}</h4>
+                    </div>
+                `;
+                card.addEventListener('click', () => renderModelDetail(model.id));
+                modelSelectorDiv.appendChild(card);
+            });
+            // Set initial model state
+            renderModelDetail(businessModels[0].id);
+
+
+            // ==========================================
+            // CHARTS INITIALIZATION (Chart.js)
+            // ==========================================
+
+            // Global Chart defaults
+            Chart.defaults.font.family = 'ui-sans-serif, system-ui, -apple-system, sans-serif';
+            Chart.defaults.color = '#57534e'; // stone-500
+
+            // --- Chart 1: Revenue Shift (Stacked Area) ---
+            const ctxRevenue = document.getElementById('revenueShiftChart').getContext('2d');
+            new Chart(ctxRevenue, {
+                type: 'line',
+                data: revenueData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // MANDATORY for responsive containers
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false }
+                        },
+                        y: {
+                            stacked: false,
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) { return value + '%' }
+                            },
+                            title: {
+                                display: true,
+                                text: '% of Global Info Trade Revenue'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // --- Chart 2: Future Attributes (Radar Chart) ---
+            const ctxFuture = document.getElementById('futureRadarChart').getContext('2d');
+            new Chart(ctxFuture, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        ['Data', 'Latency (Speed)'], 
+                        ['Machine', 'Readability'], 
+                        ['Privacy /', 'Consent Value'], 
+                        ['Volume &', 'Scale'], 
+                        ['Human', 'Narrative']
+                    ], // Wrapped labels logic
+                    datasets: [{
+                        label: 'Traditional Publisher (Web 2.0)',
+                        data: [4, 3, 5, 6, 9],
+                        fill: true,
+                        backgroundColor: 'rgba(156, 163, 175, 0.2)',
+                        borderColor: 'rgba(156, 163, 175, 1)',
+                        pointBackgroundColor: 'rgba(156, 163, 175, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(156, 163, 175, 1)'
+                    }, {
+                        label: 'Modern Data Broker (AI Era)',
+                        data: [9, 10, 9, 10, 2],
+                        fill: true,
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)', // blue-500
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(59, 130, 246, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                display: false, // Hide numeric ticks
+                                min: 0,
+                                max: 10
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '/10 Importance';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
