@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Compression Hypothesis: LLMs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutralBg: '#f5f5f4',
+                        neutralText: '#292524',
+                        accentPrimary: '#0f766e',
+                        accentSecondary: '#d97706',
+                        surface: '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f5f5f4;
+            color: #292524;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 400px;
+            background: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+                max-height: 300px;
+            }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        a.ref:link {
+            color: #0000FF;
+            /* Default link color */
+            text-decoration: none;
+        }
+
+        a.ref:visited {
+            color: #800080;
+            /* Visited link color */
+        }
+
+        a.ref:hover {
+            color: #FF0000;
+            /* Hover color */
+            text-decoration: underline;
+        }
+
+        a.ref:active {
+            color: #000000;
+            /* Active link color */
+        }
+    </style>
+</head>
+
+<body class="antialiased flex flex-col md:flex-row min-h-screen">
+
+    <!-- Chosen Palette: Warm Neutrals (Stone) with Teal and Amber accents for calm harmony and clear data distinction. -->
+    <!-- Application Structure Plan: The SPA uses a sidebar navigation for persistent orientation, paired with a scrollable main content area structured into logical chapters. It starts with the macroscopic view of compression (Scale), moves to the microscopic (Semantic Latent Space), explores the architectural tradeoffs (Lossy Compression & Hallucinations), and concludes with academic backing. This linear but jumpable narrative allows users to understand the "LLMs as compression" thesis step-by-step, making complex ML concepts consumable. -->
+    <!-- Visualization & Content Choices: 1. Scale -> Goal: Compare -> Bar Chart (Raw vs Compressed sizes) -> Hover interaction -> Shows the physical reality of the compression thesis -> Chart.js. 2. Knowledge Representation -> Goal: Relationships -> Scatter Plot (Semantic Clusters) -> Hover to read tokens -> Demonstrates how links/weights store relationships -> Chart.js. 3. Lossy Nature -> Goal: Change -> Line Chart with Slider (Temperature/Compression vs Accuracy) -> Dynamic update -> Explains hallucinations as compression artifacts -> Chart.js + Vanilla JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="w-full md:w-64 bg-surface shadow-lg md:fixed md:h-screen z-10 flex flex-col">
+        <div class="p-6 border-b border-stone-200">
+            <h1 class="text-xl font-bold text-accentPrimary leading-tight">The Compression Hypothesis</h1>
+            <!-- <p class="text-xs text-stone-500 mt-2 font-mono">v1.0.4 // Interactive Report</p> -->
+        </div>
+        <ul class="flex-grow overflow-y-auto p-4 space-y-2 text-sm font-medium" id="nav-links">
+            <li><a href="#executive-summary"
+                    class="block p-3 rounded-lg hover:bg-stone-100 transition-colors text-accentPrimary bg-stone-100">Introduction</a>
+            </li>
+            <li><a href="#scale-of-compression" class="block p-3 rounded-lg hover:bg-stone-100 transition-colors">1. The
+                    Scale of Compression</a></li>
+            <li><a href="#semantic-encoding" class="block p-3 rounded-lg hover:bg-stone-100 transition-colors">2.
+                    Semantic Latent Space</a></li>
+            <li><a href="#lossy-nuance" class="block p-3 rounded-lg hover:bg-stone-100 transition-colors">3. The "Lossy"
+                    Nuance</a></li>
+            <li><a href="#research-backing" class="block p-3 rounded-lg hover:bg-stone-100 transition-colors">4.
+                    Research & Literature</a></li>
+        </ul>
+        <div class="p-4 border-t border-stone-200 text-xs text-stone-400">
+            Based on principles of Information Theory and Neural Network Architecture.
+        </div>
+    </nav>
+
+    <main class="flex-1 md:ml-64 p-6 md:p-12 lg:p-20 overflow-x-hidden">
+
+        <header id="executive-summary" class="max-w-4xl mx-auto mb-20 pt-8">
+            <!-- <div
+                class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-accentSecondary uppercase bg-amber-100 rounded-full">
+                Thesis Overview</div> -->
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6 text-neutralText">LLMs are Humanity's
+                Intelligence, Compressed.</h2>
+            <p class="text-lg md:text-xl text-stone-600 mb-8 leading-relaxed">
+                Large Language Models (LLMs) are often mystified as "thinking machines." However, a more scientifically
+                rigorous and mathematically grounded perspective views them through the lens of <strong
+                    class="text-accentPrimary">Information Theory</strong>. An LLM is, fundamentally, a highly advanced
+                compression algorithm. It takes the vast, noisy expanse of human digital output and encodes its
+                underlying patterns, facts, and logical structures into a dense matrix of neural network weights.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="text-3xl mb-2">&#128194;</div>
+                    <h3 class="font-bold mb-2">The Input</h3>
+                    <p class="text-sm text-stone-600">Terabytes of unstructured text, code, and dialogue representing
+                        human collective knowledge.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="text-3xl mb-2">&#8661;</div>
+                    <h3 class="font-bold mb-2">The Mechanism</h3>
+                    <p class="text-sm text-stone-600">Transformer architectures that identify statistical correlations
+                        and semantic relationships.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-xl border-l-4 border-l-accentPrimary">
+                    <div class="text-3xl mb-2">&#129488;</div>
+                    <h3 class="font-bold mb-2">The Output</h3>
+                    <p class="text-sm text-stone-600">Gigabytes of dense numeric weights that serve as a lossy,
+                        generative index of human thought.</p>
+                </div>
+            </div>
+        </header>
+
+        <section id="scale-of-compression" class="max-w-5xl mx-auto mb-24 scroll-mt-20">
+            <h3 class="text-3xl font-bold border-b-2 border-stone-200 pb-2 mb-6 text-neutralText">1. The Scale of
+                Compression</h3>
+            <p class="text-stone-600 mb-8 max-w-3xl leading-relaxed">
+                This section illustrates the physical reality of the compression thesis. To understand the power of an
+                LLM, we must look at the compression ratio. Models like GPT-3 or LLaMA ingest datasets sized in
+                Terabytes (TB), containing trillions of tokens. Through training, this information is mapped into
+                parameters (weights) sized in Gigabytes (GB). This represents a compression ratio often exceeding 100:1,
+                proving that the model is not memorizing text string-by-string, but extracting underlying rules and
+                concepts.
+            </p>
+
+            <div class="flex flex-col lg:flex-row gap-8 items-center mb-8">
+                <div class="flex-1 w-full">
+                    <div class="chart-container">
+                        <canvas id="compressionChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/3 space-y-4">
+                    <div class="bg-surface p-5 rounded-lg shadow-sm border border-stone-100">
+                        <h4 class="font-bold text-accentPrimary mb-1">Kolmogorov Complexity</h4>
+                        <p class="text-sm text-stone-600">In algorithmic information theory, the Kolmogorov complexity
+                            of a dataset is the length of the shortest computer program that produces the dataset as
+                            output. LLMs push humanity closer to finding the shortest program to output human language.
+                        </p>
+                    </div>
+                    <div class="bg-stone-800 text-stone-100 p-5 rounded-lg shadow-sm">
+                        <div class="text-xs uppercase tracking-wider text-stone-400 mb-1">Key Insight</div>
+                        <p class="text-sm font-medium">Compression <strong>is</strong> understanding. To predict the
+                            next word perfectly requires a perfect model of the world that produced the word.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="semantic-encoding" class="max-w-5xl mx-auto mb-24 scroll-mt-20">
+            <h3 class="text-3xl font-bold border-b-2 border-stone-200 pb-2 mb-6 text-neutralText">2. Semantic Latent
+                Space: Encoding Knowledge</h3>
+            <p class="text-stone-600 mb-8 max-w-3xl leading-relaxed">
+                If data is compressed, how is it stored? In this section, we explore the "Latent Space". Concepts are
+                encoded not as definitions, but as vectors (coordinates) in high-dimensional space. The physical links
+                and weights of the neural network dictate where a word or concept lives. Words with similar meanings
+                cluster together. This geometric arrangement allows the model to perform logical reasoning via spatial
+                arithmetic (e.g., the vector distance between "King" and "Queen" is similar to "Man" and "Woman").
+            </p>
+
+            <div class="bg-surface p-6 rounded-xl shadow-sm border border-stone-200">
+                <div class="mb-4 flex justify-between items-end">
+                    <div>
+                        <h4 class="font-bold text-lg">2D Projection of Word Embeddings</h4>
+                        <p class="text-sm text-stone-500">Hover over points to see semantic clusters formed purely by
+                            algorithmic compression of text.</p>
+                    </div>
+                    <div class="text-xs font-mono bg-stone-100 px-2 py-1 rounded text-stone-500">PCA Reduced (Simulated)
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="semanticChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="lossy-nuance" class="max-w-5xl mx-auto mb-24 scroll-mt-20">
+            <h3 class="text-3xl font-bold border-b-2 border-stone-200 pb-2 mb-6 text-neutralText">3. The "Lossy" Nuance:
+                Hallucinations as Artifacts</h3>
+            <p class="text-stone-600 mb-8 max-w-3xl leading-relaxed">
+                Here, we address the primary limitation of LLMs. Audio files use MP3 formats to compress data by
+                removing frequencies humans can't hear (lossy compression). LLMs do something similar. They do not store
+                exact quotes; they store the <strong>probability distribution</strong> of concepts. When you ask an LLM
+                a question, you are unzipping a lossy file. "Hallucinations" are not lies; they are compression
+                artifacts—the model generating plausible-sounding text to fill in the gaps where exact factual data was
+                lost during compression.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="flex flex-col justify-center">
+                    <div class="bg-surface p-6 rounded-xl shadow-sm border border-stone-200 mb-6">
+                        <label for="temperatureSlider" class="block font-bold mb-2">Interactive: Inference Temperature
+                            (Decoding Variance)</label>
+                        <p class="text-sm text-stone-500 mb-4">Adjust the slider to simulate changing the model's
+                            'temperature'. Low temperature favors exact, highly probable (but rigid) extraction. High
+                            temperature favors creative, less probable paths, increasing hallucination risk.</p>
+
+                        <input type="range" id="temperatureSlider" min="0" max="100" value="50"
+                            class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-accentPrimary mb-2">
+                        <div class="flex justify-between text-xs text-stone-400 font-mono">
+                            <span>0.0 (Deterministic)</span>
+                            <span id="tempValue" class="font-bold text-accentPrimary">0.5</span>
+                            <span>1.0 (Creative/Noisy)</span>
+                        </div>
+                    </div>
+
+                    <div id="dynamicTextState"
+                        class="p-4 rounded-lg bg-teal-50 border border-teal-100 text-teal-800 text-sm">
+                        <strong>Current State Analysis:</strong> At moderate temperature (0.5), the decompression yields
+                        a balanced output. It retrieves factual structural data reliably while maintaining natural
+                        linguistic flow. Minor edge-case facts might be slightly distorted.
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="tradeoffChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="research-backing" class="max-w-5xl mx-auto mb-24 scroll-mt-20">
+            <h3 class="text-3xl font-bold border-b-2 border-stone-200 pb-2 mb-6 text-neutralText">4. Research &
+                Literature Review</h3>
+            <p class="text-stone-600 mb-8 max-w-3xl leading-relaxed">
+                The assertion that language modeling is synonymous with data compression is backed by peer-reviewed
+                literature bridging information theory, cognitive science, and machine learning. Below is an interactive
+                synthesis of key papers supporting the architecture of modern intelligence.
+            </p>
+
+            <div
+                class="flex flex-col md:flex-row border border-stone-200 rounded-xl overflow-hidden shadow-sm bg-surface">
+                <div class="w-full md:w-1/3 bg-stone-50 border-r border-stone-200 flex flex-col">
+                    <button
+                        class="research-tab w-full text-left p-4 font-bold border-b border-stone-200 bg-white text-accentPrimary transition-colors"
+                        data-target="paper1">
+                        Radford et al. (2019)
+                        <div class="text-xs font-normal text-stone-500 mt-1"> Unsupervised Multitask Learners</div>
+                    </button>
+                    <button
+                        class="research-tab w-full text-left p-4 font-bold border-b border-stone-200 hover:bg-stone-100 text-stone-600 transition-colors"
+                        data-target="paper2">
+                        Delétang et al. (2023)
+                        <div class="text-xs font-normal text-stone-500 mt-1">Language Modeling is Compression</div>
+                    </button>
+                    <button
+                        class="research-tab w-full text-left p-4 font-bold hover:bg-stone-100 text-stone-600 transition-colors"
+                        data-target="paper3">
+                        Elhage et al. (2021)
+                        <div class="text-xs font-normal text-stone-500 mt-1">A Mathematical Framework</div>
+                    </button>
+                </div>
+                <div class="w-full md:w-2/3 p-6 md:p-8">
+                    <div id="paper1" class="research-content block">
+                        <div class="inline-block px-2 py-1 mb-3 text-xs font-mono bg-stone-100 text-stone-600 rounded">
+                            OpenAI</div>
+                        <h4 class="text-xl font-bold mb-3"><a class="ref"
+                                href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf"
+                                target="_blank">Language Models are Unsupervised Multitask Learners</a></h4>
+                        <p class="text-stone-600 text-sm mb-4 leading-relaxed">This foundational paper for GPT-2
+                            demonstrated that as a language model scales its capacity and the volume of its training
+                            data, it naturally learns to perform downstream tasks without explicit supervision. The
+                            "compression" here is the model learning the underlying rules of language and logic to
+                            optimize its cross-entropy loss objective.</p>
+                        <h5 class="font-bold text-sm mb-1 text-stone-800">Relevance to Thesis:</h5>
+                        <p class="text-stone-600 text-sm">Proves that intelligence (ability to perform tasks) emerges
+                            spontaneously as a byproduct of optimizing data compression (next-token prediction) over
+                            massive datasets.</p>
+                    </div>
+                    <div id="paper2" class="research-content hidden">
+                        <div class="inline-block px-2 py-1 mb-3 text-xs font-mono bg-stone-100 text-stone-600 rounded">
+                            DeepMind / ICLR</div>
+                        <h4 class="text-xl font-bold mb-3"><a class="ref" href="https://arxiv.org/abs/2309.10668"
+                                target="_blank">Language Modeling Is Compression</a></h4>
+                        <p class="text-stone-600 text-sm mb-4 leading-relaxed">This research formalizes the equivalence
+                            between large language models and general-purpose data compressors. It evaluates LLMs like
+                            Chinchilla against standard compression algorithms (like gzip or LZMA) on varied datasets,
+                            showing LLMs achieve superior compression rates by building a deeper semantic understanding
+                            of the data.</p>
+                        <h5 class="font-bold text-sm mb-1 text-stone-800">Relevance to Thesis:</h5>
+                        <p class="text-stone-600 text-sm">Provides empirical mathematical evidence that the neural
+                            network weights are literally acting as a highly efficient, semantic encoding format for the
+                            training corpus.</p>
+                    </div>
+                    <div id="paper3" class="research-content hidden">
+                        <div class="inline-block px-2 py-1 mb-3 text-xs font-mono bg-stone-100 text-stone-600 rounded">
+                            Anthropic</div>
+                        <h4 class="text-xl font-bold mb-3"><a class="ref"
+                                href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank">A
+                                Mathematical Framework for Transformer Circuits</a></h4>
+                        <p class="text-stone-600 text-sm mb-4 leading-relaxed">This work dissects the internal mechanics
+                            of Transformers. It explores "induction heads" and how specific combinations of attention
+                            heads map out algorithms within the weights. It explains how information is routed and
+                            compressed into smaller sub-networks capable of complex in-context learning.</p>
+                        <h5 class="font-bold text-sm mb-1 text-stone-800">Relevance to Thesis:</h5>
+                        <p class="text-stone-600 text-sm">Explains <strong>how</strong> the compression happens
+                            mechanistically within the neural links, showing that intelligence is compiled into
+                            distinct, readable circuits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-20 border-t border-stone-200 pt-8 pb-12 text-center text-stone-500 text-sm">
+            <p>Information Architecture & Visualization Demo.</p>
+            <p class="mt-2">@Sushant Pradhan | 18th Mar, 2026</p>
+        </footer>
+
+    </main>
+
+    <script>
+        const navLinks = document.querySelectorAll('#nav-links a');
+
+        const updateActiveLink = () => {
+            let fromTop = window.scrollY + 100;
+
+            navLinks.forEach(link => {
+                let section = document.querySelector(link.hash);
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
+                    link.classList.add('bg-stone-100', 'text-accentPrimary');
+                    link.classList.remove('text-stone-600');
+                } else {
+                    link.classList.remove('bg-stone-100', 'text-accentPrimary');
+                    link.classList.add('text-stone-600');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', updateActiveLink);
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => {
+                    l.classList.remove('bg-stone-100', 'text-accentPrimary');
+                    l.classList.add('text-stone-600');
+                });
+                link.classList.add('bg-stone-100', 'text-accentPrimary');
+                link.classList.remove('text-stone-600');
+            });
+        });
+
+        const ctxComp = document.getElementById('compressionChart').getContext('2d');
+        new Chart(ctxComp, {
+            type: 'bar',
+            data: {
+                labels: ['Dataset (Terabytes)', 'Model Weights (Gigabytes)'],
+                datasets: [{
+                    label: 'Size comparison (Log Scale conceptual)',
+                    data: [15000, 140],
+                    backgroundColor: [
+                        'rgba(217, 119, 6, 0.7)',
+                        'rgba(15, 118, 110, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgb(217, 119, 6)',
+                        'rgb(15, 118, 110)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        type: 'logarithmic',
+                        title: {
+                            display: true,
+                            text: 'Volume (Log Scale)'
+                        },
+                        grid: { color: '#e7e5e4' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let val = context.raw;
+                                if (context.dataIndex === 0) return `Approx ${val / 1000} PB / ${val} TB of raw text data.`;
+                                return `Approx ${val} GB of compressed parameters.`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctxSem = document.getElementById('semanticChart').getContext('2d');
+        new Chart(ctxSem, {
+            type: 'bubble',
+            data: {
+                datasets: [
+                    {
+                        label: 'Royalty & Gender',
+                        data: [
+                            { x: 10, y: 80, r: 10, word: 'King' },
+                            { x: 30, y: 80, r: 10, word: 'Queen' },
+                            { x: 10, y: 20, r: 10, word: 'Man' },
+                            { x: 30, y: 20, r: 10, word: 'Woman' }
+                        ],
+                        backgroundColor: 'rgba(15, 118, 110, 0.6)'
+                    },
+                    {
+                        label: 'Technology Context',
+                        data: [
+                            { x: 70, y: 40, r: 8, word: 'Computer' },
+                            { x: 85, y: 45, r: 8, word: 'Algorithm' },
+                            { x: 75, y: 60, r: 12, word: 'Neural' },
+                            { x: 80, y: 30, r: 8, word: 'Data' }
+                        ],
+                        backgroundColor: 'rgba(217, 119, 6, 0.6)'
+                    },
+                    {
+                        label: 'Action Verbs',
+                        data: [
+                            { x: 45, y: 50, r: 6, word: 'Run' },
+                            { x: 50, y: 45, r: 6, word: 'Walk' },
+                            { x: 48, y: 60, r: 6, word: 'Jump' }
+                        ],
+                        backgroundColor: 'rgba(87, 83, 78, 0.6)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { display: false, min: 0, max: 100 },
+                    y: { display: false, min: 0, max: 100 }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `Token: "${context.raw.word}"`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctxTrade = document.getElementById('tradeoffChart').getContext('2d');
+        const tradeoffChart = new Chart(ctxTrade, {
+            type: 'line',
+            data: {
+                labels: ['0.0', '0.2', '0.4', '0.6', '0.8', '1.0'],
+                datasets: [
+                    {
+                        label: 'Factual Accuracy (Decompression Fidelity)',
+                        data: [95, 92, 85, 70, 50, 30],
+                        borderColor: 'rgb(15, 118, 110)',
+                        backgroundColor: 'rgba(15, 118, 110, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Hallucination / Creativity Rate',
+                        data: [5, 10, 20, 45, 75, 95],
+                        borderColor: 'rgb(217, 119, 6)',
+                        backgroundColor: 'transparent',
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    y: {
+                        title: { display: true, text: 'Percentage / Metric Score' },
+                        min: 0, max: 100,
+                        grid: { color: '#e7e5e4' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Temperature Setting' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        const slider = document.getElementById('temperatureSlider');
+        const tempValueDisplay = document.getElementById('tempValue');
+        const dynamicTextState = document.getElementById('dynamicTextState');
+
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            const tempStr = (val / 100).toFixed(1);
+            tempValueDisplay.innerText = tempStr;
+
+            tradeoffChart.data.datasets[0].borderWidth = 2;
+            tradeoffChart.data.datasets[1].borderWidth = 2;
+
+            let highlightIndex = Math.round((val / 100) * 5);
+
+            if (val < 33) {
+                dynamicTextState.className = "p-4 rounded-lg bg-stone-100 border border-stone-300 text-stone-800 text-sm";
+                dynamicTextState.innerHTML = `<strong>Current State Analysis (Temp ${tempStr}):</strong> Highly deterministic. The network acts as an exact retrieval engine. It strictly outputs the most probable token sequences found in training data. Hallucinations are rare, but output is robotic and repetitive.`;
+            } else if (val < 66) {
+                dynamicTextState.className = "p-4 rounded-lg bg-teal-50 border border-teal-100 text-teal-800 text-sm";
+                dynamicTextState.innerHTML = `<strong>Current State Analysis (Temp ${tempStr}):</strong> Balanced state. Decompression is fluid. It combines grammatical structure with high-probability factual retrieval. The 'sweet spot' for logical reasoning tasks.`;
+            } else {
+                dynamicTextState.className = "p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm";
+                dynamicTextState.innerHTML = `<strong>Current State Analysis (Temp ${tempStr}):</strong> High entropy. The network selects lower-probability token links. Factual fidelity breaks down as it hallucinates connections that were not prominent in the uncompressed source data, leading to high 'creativity' but factual errors.`;
+            }
+
+            tradeoffChart.update();
+        });
+
+        const tabs = document.querySelectorAll('.research-tab');
+        const contents = document.querySelectorAll('.research-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('bg-white', 'text-accentPrimary');
+                    t.classList.add('hover:bg-stone-100', 'text-stone-600');
+                });
+
+                tab.classList.remove('hover:bg-stone-100', 'text-stone-600');
+                tab.classList.add('bg-white', 'text-accentPrimary');
+
+                contents.forEach(c => c.classList.add('hidden'));
+
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.remove('hidden');
+                document.getElementById(targetId).classList.add('block');
+            });
+        });
+
+    </script>
+</body>
+
+</html>
