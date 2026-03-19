@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Consumer Intelligence Stack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 450px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+
+        .layer-btn {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .layer-btn.active {
+            background-color: #115e59;
+            color: #ffffff;
+            border-color: #115e59;
+            transform: translateX(10px);
+        }
+    </style>
+</head>
+
+<body class="bg-stone-50 text-stone-800 font-sans antialiased">
+
+    <!-- Chosen Palette: Warm Neutrals & Subtle Teal -->
+    <!-- Application Structure Plan: The SPA uses a top-down scrollable dashboard structure with a sticky navigation bar for quick access. It flows logically from outlining the problem (Data Overload), defining the solution architecture (The 3-Layer Stack), mapping the current market, and finally detailing consumer priorities. This structure guides the user from macro-trends to micro-features, using interactive charts and a clickable HTML diagram to make complex structural data explorable without overwhelming the user initially. -->
+    <!-- Visualization & Content Choices: 
+    1. Problem Data -> Goal: Inform -> Donut Chart (Chart.js) -> Hover reveals specific hours. Shows the disproportionate time spent searching vs. utilizing.
+    2. Stack Architecture -> Goal: Organize -> Interactive HTML/CSS Flexbox Diagram -> Clicking a layer updates a detail panel. Replaces SVG/Mermaid with native DOM interaction for outlining the Info/Knowledge/Intel hierarchy.
+    3. Tool Landscape -> Goal: Compare/Relationships -> Bubble Chart (Chart.js) -> Tooltips show specific software names. Maps market visually by intelligence vs. ease of use.
+    4. Feature Priorities -> Goal: Compare -> Horizontal Bar Chart (Chart.js) -> Hover effects highlight data. Clearly ranks consumer feature demands. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="sticky top-0 z-50 bg-stone-100/90 backdrop-blur border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-teal-800 tracking-tight">🧠 Intelligence Stack</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#overload" class="text-stone-600 hover:text-teal-700 font-medium">Overload</a>
+                    <a href="#architecture" class="text-stone-600 hover:text-teal-700 font-medium">Architecture</a>
+                    <a href="#landscape" class="text-stone-600 hover:text-teal-700 font-medium">Market Landscape</a>
+                    <a href="#demands" class="text-stone-600 hover:text-teal-700 font-medium">Consumer Demands</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-20 bg-stone-100 border-b border-stone-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-stone-900 tracking-tight mb-6">
+                The Consumer Intelligence Stack
+            </h1>
+            <p class="text-xl text-stone-600 mb-8 leading-relaxed">
+                Transitioning from basic information storage to active knowledge synthesis and personal intelligence. A
+                deep dive into how consumers are managing their digital brains.
+            </p>
+            <div class="inline-flex space-x-4">
+                <a href="#architecture"
+                    class="bg-teal-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-teal-800 transition">Explore
+                    the Stack</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="overload" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-stone-900 mb-4">The Information Overload Crisis</h2>
+                <p class="text-lg text-stone-600">
+                    This section illustrates the core problem driving the need for better personal intelligence
+                    software. Consumers are generating and saving more data than ever, but the friction of retrieval is
+                    causing massive inefficiencies. The chart below breaks down how the average digital knowledge worker
+                    spends their time managing personal data each week.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <h3 class="text-xl font-bold text-stone-800 mb-4 text-center">Weekly Time Allocation</h3>
+                    <div class="chart-container">
+                        <canvas id="overloadChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg mb-6">
+                        <h4 class="text-lg font-bold text-amber-900 mb-2">Key Finding: The Retrieval Penalty</h4>
+                        <p class="text-amber-800">
+                            Consumers spend nearly 4x more time searching for and organizing information than they do
+                            actually synthesizing it into actionable knowledge. The traditional "file and folder"
+                            paradigm is breaking under modern data loads.
+                        </p>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-2xl mr-3">🔍</span>
+                            <div>
+                                <h5 class="font-bold text-stone-900">Search Friction</h5>
+                                <p class="text-stone-600">Average of 12 hours/week lost looking for past notes,
+                                    bookmarks, or files.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-2xl mr-3">📁</span>
+                            <div>
+                                <h5 class="font-bold text-stone-900">Organization Fatigue</h5>
+                                <p class="text-stone-600">Complex tagging and folder hierarchies require constant,
+                                    unsustainable maintenance.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="py-20 bg-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12 text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Architecture of the New Stack</h2>
+                    <p class="text-lg text-stone-700">
+                        To solve the overload crisis, the consumer software market is evolving from single-purpose note
+                        apps into a three-layered stack. This section allows you to interactively explore the
+                        Information, Knowledge, and Intelligence layers. Click on any layer in the diagram to understand
+                        its specific role, capabilities, and representative tools.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="flex flex-col space-y-4 h-full">
+
+                        <button
+                            class="layer-btn active w-full text-left p-6 rounded-lg border-2 border-stone-300 bg-white shadow-sm flex items-center justify-between hover:border-teal-400"
+                            data-layer="information">
+                            <div>
+                                <span class="text-sm font-bold text-teal-600 uppercase tracking-wider block mb-1">Layer
+                                    1</span>
+                                <span class="text-2xl font-bold">Information</span>
+                            </div>
+                            <span class="text-3xl">🗄️</span>
+                        </button>
+
+                        <button
+                            class="layer-btn w-full text-left p-6 rounded-lg border-2 border-stone-300 bg-white shadow-sm flex items-center justify-between hover:border-teal-400"
+                            data-layer="knowledge">
+                            <div>
+                                <span class="text-sm font-bold text-stone-500 uppercase tracking-wider block mb-1">Layer
+                                    2</span>
+                                <span class="text-2xl font-bold text-stone-800">Knowledge</span>
+                            </div>
+                            <span class="text-3xl">🕸️</span>
+                        </button>
+
+                        <button
+                            class="layer-btn w-full text-left p-6 rounded-lg border-2 border-stone-300 bg-white shadow-sm flex items-center justify-between hover:border-teal-400"
+                            data-layer="intelligence">
+                            <div>
+                                <span class="text-sm font-bold text-stone-500 uppercase tracking-wider block mb-1">Layer
+                                    3</span>
+                                <span class="text-2xl font-bold text-stone-800">Intelligence</span>
+                            </div>
+                            <span class="text-3xl">🤖</span>
+                        </button>
+
+
+
+
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-md border border-stone-200 h-full flex flex-col justify-center"
+                        id="layer-details">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="landscape" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-stone-900 mb-4">Market Landscape Map</h2>
+                <p class="text-lg text-stone-600">
+                    This bubble chart visualizes the current competitive landscape of consumer productivity tools. It
+                    maps applications based on their ease of use against their native intelligence capabilities. The
+                    size of the bubble represents estimated relative consumer market share. Hover over the bubbles to
+                    see specific tool details.
+                </p>
+            </div>
+
+            <div class="bg-white p-4 sm:p-8 rounded-xl shadow-sm border border-stone-200">
+                <div class="chart-container" style="height: 60vh; max-height: 600px;">
+                    <canvas id="landscapeChart"></canvas>
+                </div>
+                <p class="text-sm text-stone-500 text-center mt-4">Note: Market share sizes are estimates based on
+                    report survey data.</p>
+            </div>
+        </section>
+
+        <section id="demands" class="py-20 bg-stone-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12 text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">What Consumers Actually Want</h2>
+                    <p class="text-lg text-stone-700">
+                        Despite the hype around advanced AI, consumer feature prioritization shows a strong desire for
+                        practical utilities that reduce friction. This section ranks the most requested features from
+                        the consumer survey, highlighting the gap between bleeding-edge technology and actual user
+                        needs.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 max-w-4xl mx-auto">
+                    <h3 class="text-xl font-bold text-stone-800 mb-4 text-center">Top Requested Features (% of Users)
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="featuresChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-12 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-2xl font-bold text-stone-200 mb-4">The Future of Personal Compute</h2>
+            <p class="mb-8 text-stone-500">
+                The shift from manual curation to automated synthesis represents the biggest paradigm shift in personal
+                computing since the graphical user interface.
+            </p>
+            <a href="/articles/pdf/intelligence_stack.pdf" target="_blank"
+                class="inline-block border border-[#C05640] text-[#C05640] font-bold py-3 px-8 rounded hover:bg-[#C05640] hover:text-white transition cursor-pointer">
+                View Full Report
+            </a>
+            <p class="text-sm mt-4">@Sushant Pradhan | 20th Mar, 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        const chartColors = {
+            teal: '#0d9488',
+            tealLight: '#5eead4',
+            tealDark: '#115e59',
+            amber: '#d97706',
+            stone: '#a8a29e',
+            stoneDark: '#44403c',
+            stoneLight: '#e7e5e4'
+        };
+
+        const overloadCtx = document.getElementById('overloadChart').getContext('2d');
+        new Chart(overloadCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Searching/Retrieving', 'Organizing/Tagging', 'Reading/Consuming', 'Synthesizing/Creating'],
+                datasets: [{
+                    data: [12, 8, 10, 4],
+                    backgroundColor: [chartColors.amber, chartColors.stone, chartColors.tealLight, chartColors.tealDark],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, font: { family: 'sans-serif' } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return ' ' + context.label + ': ' + context.raw + ' hours/week';
+                            }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+
+        const layerData = {
+            intelligence: {
+                title: "Layer 3: Intelligence",
+                icon: "🤖",
+                desc: "The proactive layer. Instead of just storing data, these tools actively read, synthesize, and surface information when needed. They act as a collaborative partner rather than a passive filing cabinet.",
+                features: ["Semantic Search", "Auto-summarization", "Contextual Prompts", "Generative Output"],
+                tools: "Rewind.ai, ChatGPT, Mem, Notion AI",
+                colorText: "text-teal-700",
+                colorBg: "bg-teal-50"
+            },
+            knowledge: {
+                title: "Layer 2: Knowledge",
+                icon: "🕸️",
+                desc: "The connective layer. Focuses on relationships between ideas rather than strict hierarchies. Utilizes bi-directional linking and graph databases to map how a user's thoughts connect organically.",
+                features: ["Bi-directional Links", "Graph Visualization", "Block-level referencing", "Daily Notes"],
+                tools: "Obsidian, Roam Research, Logseq",
+                colorText: "text-stone-800",
+                colorBg: "bg-stone-100"
+            },
+            information: {
+                title: "Layer 1: Information",
+                icon: "🗄️",
+                desc: "The foundational capture layer. Highly reliable, cross-platform systems for capturing raw text, images, and files. Primarily relies on folders and tags for manual organization.",
+                features: ["Rich Text Editing", "Folder Hierarchies", "Cross-device Sync", "Web Clipping"],
+                tools: "Evernote, Apple Notes, Google Keep",
+                colorText: "text-stone-800",
+                colorBg: "bg-stone-100"
+            }
+        };
+
+        const detailPanel = document.getElementById('layer-details');
+        const layerBtns = document.querySelectorAll('.layer-btn');
+
+        function updateLayerPanel(layerKey) {
+            const data = layerData[layerKey];
+
+            let featuresHtml = '';
+            for (let i = 0; i < data.features.length; i++) {
+                featuresHtml += `<span class="inline-block bg-white border border-stone-200 rounded px-3 py-1 text-sm text-stone-600 mr-2 mb-2 shadow-sm">${data.features[i]}</span>`;
+            }
+
+            detailPanel.innerHTML = `
+                <div class="flex items-center mb-6">
+                    <span class="text-4xl mr-4">${data.icon}</span>
+                    <h3 class="text-2xl font-bold ${data.colorText}">${data.title}</h3>
+                </div>
+                <p class="text-stone-600 text-lg mb-8 leading-relaxed">${data.desc}</p>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold text-stone-900 mb-3 uppercase tracking-wide text-sm">Defining Features</h4>
+                    <div class="flex flex-wrap">${featuresHtml}</div>
+                </div>
+                
+                <div class="${data.colorBg} p-4 rounded-lg border border-stone-200">
+                    <h4 class="font-bold text-stone-900 mb-1">Representative Tools</h4>
+                    <p class="text-stone-700">${data.tools}</p>
+                </div>
+            `;
+        }
+
+        updateLayerPanel('information');
+
+        for (let i = 0; i < layerBtns.length; i++) {
+            layerBtns[i].addEventListener('click', function () {
+                for (let j = 0; j < layerBtns.length; j++) {
+                    layerBtns[j].classList.remove('active');
+                    layerBtns[j].querySelector('span.text-sm').classList.remove('text-teal-600');
+                    layerBtns[j].querySelector('span.text-sm').classList.add('text-stone-500');
+                    layerBtns[j].querySelector('span.text-2xl').classList.remove('text-white');
+                    layerBtns[j].querySelector('span.text-2xl').classList.add('text-stone-800');
+                }
+
+                this.classList.add('active');
+                this.querySelector('span.text-sm').classList.remove('text-stone-500');
+                this.querySelector('span.text-sm').classList.add('text-teal-200');
+                this.querySelector('span.text-2xl').classList.remove('text-stone-800');
+                this.querySelector('span.text-2xl').classList.add('text-white');
+
+                updateLayerPanel(this.getAttribute('data-layer'));
+            });
+        }
+
+        const landscapeCtx = document.getElementById('landscapeChart').getContext('2d');
+        new Chart(landscapeCtx, {
+            type: 'bubble',
+            data: {
+                datasets: [
+                    {
+                        label: 'Information Layer',
+                        data: [
+                            { x: 2, y: 9, r: 25, tool: 'Apple Notes' },
+                            { x: 3, y: 8, r: 20, tool: 'Evernote' },
+                            { x: 4, y: 6, r: 15, tool: 'OneNote' }
+                        ],
+                        backgroundColor: 'rgba(168, 162, 158, 0.6)',
+                        borderColor: chartColors.stoneDark
+                    },
+                    {
+                        label: 'Knowledge Layer',
+                        data: [
+                            { x: 6, y: 4, r: 18, tool: 'Obsidian' },
+                            { x: 7, y: 3, r: 10, tool: 'Roam Research' },
+                            { x: 5, y: 7, r: 30, tool: 'Notion' }
+                        ],
+                        backgroundColor: 'rgba(217, 119, 6, 0.6)',
+                        borderColor: chartColors.amber
+                    },
+                    {
+                        label: 'Intelligence Layer',
+                        data: [
+                            { x: 9, y: 8, r: 12, tool: 'Mem.ai' },
+                            { x: 10, y: 9, r: 35, tool: 'ChatGPT' },
+                            { x: 9.5, y: 6, r: 8, tool: 'Rewind' }
+                        ],
+                        backgroundColor: 'rgba(13, 148, 136, 0.7)',
+                        borderColor: chartColors.tealDark
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Native Intelligence Capabilities (Low to High)' },
+                        min: 0, max: 11,
+                        grid: { color: chartColors.stoneLight }
+                    },
+                    y: {
+                        title: { display: true, text: 'Ease of Use & Adoption (Low to High)' },
+                        min: 0, max: 11,
+                        grid: { color: chartColors.stoneLight }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.raw.tool + ' (Int: ' + context.raw.x + ', Ease: ' + context.raw.y + ')';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const featuresCtx = document.getElementById('featuresChart').getContext('2d');
+        new Chart(featuresCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Universal Semantic Search', 'Seamless Cross-device Sync', 'Automated Tagging', 'End-to-End Encryption', 'Generative Writing Asst.', 'Voice-to-Text Transcription'],
+                datasets: [{
+                    label: '% of Consumers Prioritizing',
+                    data: [82, 78, 65, 54, 48, 35],
+                    backgroundColor: chartColors.teal,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        min: 0, max: 100,
+                        grid: { color: chartColors.stoneLight }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.raw + '% priority';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
