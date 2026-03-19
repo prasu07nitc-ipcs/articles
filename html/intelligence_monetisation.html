@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mind as an Enterprise: Individual Intelligence Monetization</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chosen Palette: Warm Neutrals & Sage (Calm Harmony) -->
+    <!-- Application Structure Plan: The SPA uses a logical, scrolling narrative structure. It starts with a high-level overview of the 'Knowledge Economy' to set the stage. It then transitions into the 'Intelligence Stack' (what can be monetized), followed by an interactive 'Monetization Avenues' section (how to monetize, comparing effort vs reward). Next, it presents 'Economic Realities' (data-driven charts on income and market growth) to ground the concepts in reality. Finally, it offers a 'Strategic Roadmap' for the user. This linear yet explorable structure prevents overwhelm while allowing users to dive deep into specific charts and text blocks via interactions. -->
+    <!-- Visualization & Content Choices: 
+         1. Hero/Overview -> Goal: Inform -> Clean Typography & Fade-ins -> Engaging entry point.
+         2. Intelligence Stack -> Goal: Organize -> Interactive HTML/CSS Cards (Unicode icons) -> NO SVG used. Allows users to click and learn about specific intelligence types.
+         3. Avenues of Monetization -> Goal: Compare -> Interactive Scatter Plot (Chart.js) + Dynamic Text -> Users can see the landscape of effort vs. potential and click points/buttons to read details.
+         4. Economic Realities -> Goal: Inform/Analyze -> Doughnut & Bar Charts (Chart.js) -> Shows market size and income distribution. Doughnut has hover/click events to show details.
+         5. Roadmap -> Goal: Organize -> HTML/Tailwind Timeline -> Step-by-step guide. NO Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        sage: {
+                            100: '#e3e8e4',
+                            600: '#5c7263',
+                            700: '#4a5c50',
+                        },
+                        terracotta: {
+                            100: '#f5e6e1',
+                            600: '#c27b65',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base typography and smooth scrolling */
+        body {
+            background-color: #fafaf9;
+            /* stone-50 */
+            color: #292524;
+            /* stone-800 */
+        }
+
+        /* Custom scrollbar for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e;
+        }
+
+        /* STRICT CHART CONTAINER CSS AS REQUIRED */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 45vh;
+            /* Responsive height */
+            min-height: 300px;
+            max-height: 500px;
+            overflow: hidden;
+            /* Prevent overflow */
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Interactive Card Hover Effects */
+        .interactive-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: #5c7263;
+            /* Sage 600 */
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-sage-100 selection:text-sage-700">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-stone-50/90 backdrop-blur-md border-b border-stone-200 transition-all duration-300"
+        id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 font-serif font-bold text-xl text-stone-900 tracking-tight">
+                    Mind<span class="text-sage-600">Enterprise</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
+                    <a href="#overview" class="hover:text-sage-600 transition-colors">Overview</a>
+                    <a href="#stack" class="hover:text-sage-600 transition-colors">Intelligence Stack</a>
+                    <a href="#avenues" class="hover:text-sage-600 transition-colors">Monetization Avenues</a>
+                    <a href="#economics" class="hover:text-sage-600 transition-colors">The Economics</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="overview"
+        class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center fade-in-section">
+        <div
+            class="inline-flex items-center px-3 py-1 rounded-full bg-terracotta-100 text-terracotta-600 text-xs font-semibold uppercase tracking-wider mb-6">
+            &#10024; The Individual Perspective
+        </div>
+        <h1 class="text-5xl md:text-7xl font-serif font-bold text-stone-900 leading-tight mb-6">
+            Monetizing <span class="italic text-sage-600">Individual</span> Intelligence
+        </h1>
+        <p class="text-xl md:text-2xl text-stone-600 max-w-3xl mb-10 leading-relaxed">
+            We have shifted from an industrial economy <strong style="font-size: large;"><i>(late 18th century – late
+                    20th century)</i></strong> to a knowledge economy <strong style="font-size: large;"><i>(late 1990s –
+                    Present)</i></strong>. Discover how individuals are transforming their specialized knowledge,
+            analytical skills, and unique insights into scalable economic value outside traditional institutional
+            structures.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mt-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+                <div class="text-3xl mb-2">&#128188;</div>
+                <h3 class="font-bold text-lg mb-2">The Fractional Worker</h3>
+                <p class="text-stone-500 text-sm">Renting expertise to multiple entities rather than committing to a
+                    single employer.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+                <div class="text-3xl mb-2">&#128221;</div>
+                <h3 class="font-bold text-lg mb-2">The Creator-Educator</h3>
+                <p class="text-stone-500 text-sm">Packaging tacit knowledge into highly scalable digital products and
+                    media.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-100">
+                <div class="text-3xl mb-2">&#129488;</div>
+                <h3 class="font-bold text-lg mb-2">The Micro-Consultant</h3>
+                <p class="text-stone-500 text-sm">Providing high-value, hour-long strategic insights via expert
+                    networks.</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: The Intelligence Stack -->
+        <section id="stack" class="py-20 bg-white border-y border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">The Individual
+                        Intelligence Stack</h2>
+                    <p class="text-lg text-stone-600">
+                        Before monetizing, one must identify the asset. Individual intelligence is not monolithic; it is
+                        a stack of distinct capabilities. Click on the cards below to explore how different types of
+                        intelligence translate into market value.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="stack-grid">
+                    <!-- Cards will be populated by JS -->
+                </div>
+
+                <!-- Detail Panel (Hidden by default, shown on click) -->
+                <div id="stack-detail-panel"
+                    class="hidden mt-8 p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <h3 id="detail-title" class="text-2xl font-bold text-sage-700 mb-3"></h3>
+                    <p id="detail-desc" class="text-stone-700 mb-4 text-lg"></p>
+                    <div class="bg-white p-4 rounded border border-stone-200">
+                        <span class="font-semibold text-stone-900 block mb-2">Real-world Application:</span>
+                        <p id="detail-app" class="text-stone-600 text-sm"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Monetization Avenues -->
+        <section id="avenues" class="py-20 bg-stone-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                <div class="mb-12">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">Avenues of Monetization
+                    </h2>
+                    <p class="text-lg text-stone-600 max-w-4xl">
+                        How does tacit knowledge become income? The landscape varies wildly based on two key axes:
+                        <strong>Time Requirement (Upfront vs. Ongoing)</strong> and <strong>Scalability/Income
+                            Potential</strong>. Explore the scatter plot below to understand the risk/reward profile of
+                        different monetization vehicles.
+                    </p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <!-- Interactive Controls & Info -->
+                    <div class="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="text-xl font-bold mb-4 border-b border-stone-100 pb-2">Select an Avenue</h3>
+                        <div class="space-y-2 mb-6" id="avenue-buttons">
+                            <!-- Buttons populated by JS -->
+                        </div>
+
+                        <div id="avenue-insight" class="bg-sage-50 p-4 rounded-lg border border-sage-100 min-h-[150px]">
+                            <p class="text-sm text-sage-700 italic">Select an avenue above or click a point on the chart
+                                to view its detailed profile, monetization mechanics, and prerequisites.</p>
+                        </div>
+                    </div>
+
+                    <!-- Chart Container -->
+                    <div class="w-full lg:w-2/3">
+                        <div class="chart-container">
+                            <canvas id="avenuesChart"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-stone-500 mt-4">
+                            * Data represents general market observations. X-Axis represents the continuous time/effort
+                            required to maintain the income stream. Y-Axis represents the theoretical ceiling of income.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Economics of Knowing -->
+        <section id="economics" class="py-20 bg-white border-t border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">The Economic Realities
+                    </h2>
+                    <p class="text-lg text-stone-600">
+                        The "Creator Economy" and the "Knowledge Economy" are converging. Individuals are operating as
+                        one-person businesses, diversifying their revenue streams to mitigate risk. Let's look at the
+                        data driving this macro-trend.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Chart 1: Revenue Streams -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-center">Typical Revenue Distribution of a "Solopreneur"
+                        </h3>
+                        <p class="text-sm text-stone-500 text-center mb-6">A healthy intelligence monetization model
+                            relies on diversified, asynchronous income.</p>
+                        <div class="chart-container" style="max-width: 500px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                        <div id="revenue-insight"
+                            class="mt-6 p-4 bg-stone-50 rounded text-sm text-stone-700 text-center border border-stone-200">
+                            Hover over the chart segments to see detailed breakdowns of each revenue category.
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Market Growth -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-center">Growth of the Knowledge Monetization Sector</h3>
+                        <p class="text-sm text-stone-500 text-center mb-6">Estimated market size of individual-led
+                            digital products and consulting (in Billions USD).</p>
+                        <div class="chart-container">
+                            <canvas id="growthChart"></canvas>
+                        </div>
+                        <div class="mt-6 p-4 bg-stone-50 rounded text-sm text-stone-700 border border-stone-200">
+                            <strong>Insight:</strong> The barrier to entry has dropped to near zero, while global reach
+                            has maximized. The premium is now placed on <em><strong> curation, specific expertise, and
+                                    trust</strong></em> over simple information access.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: The Roadmap -->
+        <section class="py-20 bg-stone-900 text-stone-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4 text-center">From Insight to Income: A
+                    Strategic Roadmap</h2>
+                <p class="text-lg text-stone-400 text-center mb-16">
+                    Monetizing individual intelligence is rarely an overnight success. It follows a distinct maturity
+                    curve.
+                </p>
+
+                <div
+                    class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-sage-600 before:to-transparent">
+
+                    <!-- Step 1 -->
+                    <div
+                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-sage-600 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">
+                            1</div>
+                        <div
+                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-stone-800 p-6 rounded-xl border border-stone-700 shadow-lg transition duration-300 hover:border-sage-500">
+                            <h3 class="font-bold text-xl mb-2 text-sage-400">Phase 1: Accumulation & Synthesis</h3>
+                            <p class="text-stone-300 text-sm">Building deep domain expertise. This involves traditional
+                                employment, extensive reading, building private projects, and forming unique mental
+                                models. You cannot monetize what you do not possess.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div
+                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-sage-600 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">
+                            2</div>
+                        <div
+                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-stone-800 p-6 rounded-xl border border-stone-700 shadow-lg transition duration-300 hover:border-sage-500">
+                            <h3 class="font-bold text-xl mb-2 text-sage-400">Phase 2: Proof of Work & Audience</h3>
+                            <p class="text-stone-300 text-sm">Translating tacit knowledge into public artifacts. Writing
+                                essays, publishing open-source code, sharing frameworks on social platforms. Goal: Build
+                                trust and a permissioned audience (e.g., email list).</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div
+                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-sage-600 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">
+                            3</div>
+                        <div
+                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-stone-800 p-6 rounded-xl border border-stone-700 shadow-lg transition duration-300 hover:border-sage-500">
+                            <h3 class="font-bold text-xl mb-2 text-sage-400">Phase 3: High-Touch Service</h3>
+                            <p class="text-stone-300 text-sm">The first monetization is usually exchanging time for
+                                money at a premium rate. Coaching, 1-on-1 consulting, fractional CXO roles. This
+                                validates market demand for your specific intelligence.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div
+                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-sage-600 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">
+                            4</div>
+                        <div
+                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-stone-800 p-6 rounded-xl border border-stone-700 shadow-lg transition duration-300 hover:border-sage-500">
+                            <h3 class="font-bold text-xl mb-2 text-sage-400">Phase 4: Productization & Scale</h3>
+                            <p class="text-stone-300 text-sm">Decoupling time from income. Turning recurring consulting
+                                frameworks into digital courses, paid newsletters, software tools, or intellectual
+                                property licensing. Creating assets that work asynchronously.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-950 text-stone-500 py-8 text-center border-t border-stone-800">
+        <p class="text-sm">Monetizing Individual Intelligence</p>
+        <p>@Sushant Pradhan | 19th Mar, 2026</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- 1. Data Store ---
+        const appData = {
+            intelligenceStack: [
+                { id: 'sme', icon: '&#128218;', title: 'Subject Matter Expertise', desc: 'Deep, specialized knowledge in a specific domain (e.g., biotech regulations, rust programming).', app: 'Consulting for venture capital firms evaluating startups in your niche.' },
+                { id: 'analytical', icon: '&#128200;', title: 'Analytical Intelligence', desc: 'The ability to parse large datasets, identify patterns, and construct predictive models.', app: 'Creating specialized data dashboards or selling market trend reports.' },
+                { id: 'creative', icon: '&#127912;', title: 'Creative Synthesizing', desc: 'Connecting disparate ideas to form novel concepts or frameworks.', app: 'Writing a paid newsletter that analyzes intersections between philosophy and technology.' },
+                { id: 'operational', icon: '&#9881;&#65039;', title: 'Operational Intelligence', desc: 'Knowing exactly how to execute, systematize, and scale complex processes.', app: 'Selling SOPs (Standard Operating Procedures) or fractional COO services to agencies.' }
+            ],
+            avenues: [
+                {
+                    id: 'course', label: 'Cohort-Based Courses', x: 8, y: 9, color: '#c27b65',
+                    insight: '<strong>Cohort Courses:</strong> High upfront time to build, high ongoing time to manage live sessions. Very high income potential due to premium pricing (e.g., $1k-$5k/seat).'
+                },
+                {
+                    id: 'ebook', label: 'Asynchronous Digital Products', x: 2, y: 5, color: '#5c7263',
+                    insight: '<strong>E-books/Templates:</strong> High upfront time, but near zero ongoing time. Lower price points require massive volume to generate high total income.'
+                },
+                {
+                    id: 'consulting', label: '1-on-1 Consulting', x: 7, y: 7, color: '#4a5c50',
+                    insight: '<strong>Consulting:</strong> Pure trade of time for money, but at a premium rate. Limited by the number of hours in a week. Excellent for initial cash flow and market research.'
+                },
+                {
+                    id: 'newsletter', label: 'Paid Newsletter/Substack', x: 6, y: 6, color: '#d97706',
+                    insight: '<strong>Paid Newsletter:</strong> Requires relentless consistency (high ongoing time). Income compounds over time as subscriber base grows. High vulnerability to platform churn.'
+                },
+                {
+                    id: 'fractional', label: 'Fractional Executive', x: 5, y: 8, color: '#0369a1',
+                    insight: '<strong>Fractional Work:</strong> Integrating deeply into a company for a fraction of the time (e.g., 1 day a week). High retainer fees, leverages deep operational intelligence.'
+                },
+                {
+                    id: 'micro', label: 'Micro-Consulting (Expert Networks)', x: 1, y: 3, color: '#7e22ce',
+                    insight: '<strong>Micro-Consulting:</strong> Sites like GLG or AlphaSights. Zero setup time, purely transactional 1-hour calls. High hourly rate ($300-$1000/hr) but low total volume.'
+                }
+            ],
+            revenueDistribution: {
+                labels: ['Digital Products/Courses', 'Retainer Consulting', 'Paid Subscriptions', 'Affiliates/Sponsorships', 'One-off Micro-consulting'],
+                data: [40, 25, 20, 10, 5],
+                insights: [
+                    "Highly scalable. The core engine of wealth generation for the individual creator.",
+                    "Provides stable, predictable cash flow to fund riskier digital product creation.",
+                    "The holy grail: Recurring revenue. Requires constant value generation to prevent churn.",
+                    "Monetizing the 'attention' and trust built around your specific intelligence.",
+                    "Low friction, high hourly rate, but unpredictable volume."
+                ]
+            },
+            marketGrowth: {
+                years: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'],
+                data: [65, 88, 110, 140, 175, 210, 250, 295, 340, 385, 430]
+            }
+        };
+
+        // --- 2. Initialize UI Components ---
+
+        // Render Intelligence Stack Cards
+        const stackGrid = document.getElementById('stack-grid');
+        appData.intelligenceStack.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-xl border border-stone-200 interactive-card text-center';
+            card.innerHTML = `
+                <div class="text-4xl mb-4">${item.icon}</div>
+                <h4 class="font-bold text-stone-900 mb-2">${item.title}</h4>
+                <p class="text-sm text-stone-500">Click to expand details</p>
+            `;
+            card.addEventListener('click', () => showStackDetail(item));
+            stackGrid.appendChild(card);
+        });
+
+        function showStackDetail(item) {
+            const panel = document.getElementById('stack-detail-panel');
+            document.getElementById('detail-title').innerText = item.title;
+            document.getElementById('detail-desc').innerText = item.desc;
+            document.getElementById('detail-app').innerText = item.app;
+            panel.classList.remove('hidden');
+            // Scroll slightly to bring panel into view
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // --- 3. Chart.js Implementations ---
+
+        // Chart 1: Avenues Scatter Plot
+        const ctxAvenues = document.getElementById('avenuesChart').getContext('2d');
+
+        const scatterData = {
+            datasets: appData.avenues.map(ave => ({
+                label: ave.label,
+                data: [{ x: ave.x, y: ave.y }],
+                backgroundColor: ave.color,
+                pointRadius: 8,
+                pointHoverRadius: 12
+            }))
+        };
+
+        const avenuesChart = new Chart(ctxAvenues, {
+            type: 'scatter',
+            data: scatterData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 12, usePointStyle: true, padding: 15, font: { family: 'Inter' } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.dataset.label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Ongoing Time/Effort Requirement (Low to High)' },
+                        min: 0, max: 10,
+                        ticks: { display: false }
+                    },
+                    y: {
+                        title: { display: true, text: 'Income Ceiling Potential (Low to High)' },
+                        min: 0, max: 10,
+                        ticks: { display: false }
+                    }
+                },
+                onClick: (e, activeElements) => {
+                    if (activeElements.length > 0) {
+                        const datasetIndex = activeElements[0].datasetIndex;
+                        const avenueId = appData.avenues[datasetIndex].id;
+                        updateAvenueInsight(avenueId);
+                        highlightAvenueButton(avenueId);
+                    }
+                }
+            }
+        });
+
+        // Setup Avenue Buttons
+        const avenueButtonsContainer = document.getElementById('avenue-buttons');
+        appData.avenues.forEach(ave => {
+            const btn = document.createElement('button');
+            btn.className = 'w-full text-left px-4 py-2 rounded border border-stone-200 hover:bg-stone-50 transition-colors text-sm font-medium text-stone-700 avenue-btn';
+            btn.dataset.id = ave.id;
+            btn.innerText = ave.label;
+            btn.style.borderLeft = `4px solid ${ave.color}`;
+            btn.addEventListener('click', () => {
+                updateAvenueInsight(ave.id);
+                highlightAvenueButton(ave.id);
+            });
+            avenueButtonsContainer.appendChild(btn);
+        });
+
+        function updateAvenueInsight(id) {
+            const ave = appData.avenues.find(a => a.id === id);
+            const insightBox = document.getElementById('avenue-insight');
+            insightBox.innerHTML = `<p class="text-stone-800">${ave.insight}</p>`;
+            // Slight animation
+            insightBox.style.opacity = 0;
+            setTimeout(() => insightBox.style.opacity = 1, 150);
+        }
+
+        function highlightAvenueButton(id) {
+            document.querySelectorAll('.avenue-btn').forEach(btn => {
+                btn.classList.remove('bg-stone-100', 'font-bold');
+                if (btn.dataset.id === id) {
+                    btn.classList.add('bg-stone-100', 'font-bold');
+                }
+            });
+        }
+
+        // Chart 2: Revenue Distribution (Doughnut)
+        const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctxRevenue, {
+            type: 'doughnut',
+            data: {
+                labels: appData.revenueDistribution.labels,
+                datasets: [{
+                    data: appData.revenueDistribution.data,
+                    backgroundColor: ['#5c7263', '#c27b65', '#d97706', '#0369a1', '#78716c'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '65%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return ` ${context.label}: ${context.parsed}%`;
+                            }
+                        }
+                    }
+                },
+                onHover: (event, elements) => {
+                    event.native.target.style.cursor = elements[0] ? 'pointer' : 'default';
+                },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const label = appData.revenueDistribution.labels[index];
+                        const pct = appData.revenueDistribution.data[index];
+                        const insight = appData.revenueDistribution.insights[index];
+                        document.getElementById('revenue-insight').innerHTML =
+                            `<strong>${label} (${pct}%)</strong><br/><span class="text-stone-600">${insight}</span>`;
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Market Growth (Bar)
+        const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+        new Chart(ctxGrowth, {
+            type: 'bar',
+            data: {
+                labels: appData.marketGrowth.years,
+                datasets: [{
+                    label: 'Market Size ($B)',
+                    data: appData.marketGrowth.data,
+                    backgroundColor: [
+                        '#e3e8e4', // 2020
+                        '#e3e8e4', // 2021
+                        '#e3e8e4', // 2022
+                        '#e3e8e4', // 2023
+                        '#e3e8e4', // 2024
+                        '#e3e8e4', // 2025
+
+                        '#5c7263', // 2026 (projection starts)
+                        '#5c7263', // 2027
+                        '#5c7263', // 2028
+                        '#5c7263', // 2029
+                        '#5c7263'  // 2030
+                    ],
+                    hoverBackgroundColor: [
+                        '#cbd5cf',
+                        '#cbd5cf',
+                        '#cbd5cf',
+                        '#cbd5cf',
+                        '#cbd5cf',
+                        '#cbd5cf',
+
+                        '#4a5c50',
+                        '#4a5c50',
+                        '#4a5c50',
+                        '#4a5c50',
+                        '#4a5c50'
+                    ],
+                    borderRadius: 4,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Billions USD' },
+                        grid: { color: '#f5f5f4' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- 4. Interactions & Animations ---
+
+        // Navbar blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+
+        // Intersection Observer for scroll fade-ins
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+
+</html>
