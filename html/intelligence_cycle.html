@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Cognitive Hydrology: Intelligence as a Lifeline</title>
-    
+
     <!-- Chosen Palette: Warm Neutrals with Deep Teal and Amber Accents (Calm Harmony) -->
     <!-- Application Structure Plan: The SPA uses a continuous scrolling narrative, structured into 5 thematic sections. 
          1. Core Metaphor (Introduction): Establishes the baseline analogy.
@@ -60,8 +61,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap');
 
         body {
-            background-color: #fafaf9; /* stone-50 */
-            color: #292524; /* stone-800 */
+            background-color: #fafaf9;
+            /* stone-50 */
+            color: #292524;
+            /* stone-800 */
         }
 
         /* Standardized Chart Container */
@@ -74,6 +77,7 @@
             height: 300px;
             max-height: 400px;
         }
+
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
@@ -96,6 +100,7 @@
             height: 250px;
             perspective: 1000px;
         }
+
         .flip-card-inner {
             position: relative;
             width: 100%;
@@ -104,10 +109,13 @@
             transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             transform-style: preserve-3d;
         }
+
         .flip-card:hover .flip-card-inner {
             transform: rotateY(180deg);
         }
-        .flip-card-front, .flip-card-back {
+
+        .flip-card-front,
+        .flip-card-back {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -120,16 +128,22 @@
             padding: 1.5rem;
             border-radius: 1rem;
         }
+
         .flip-card-front {
-            background-color: #e7e5e4; /* stone-200 */
+            background-color: #e7e5e4;
+            /* stone-200 */
             color: #1c1917;
-            border-top: 4px solid #0d9488; /* teal */
+            border-top: 4px solid #0d9488;
+            /* teal */
         }
+
         .flip-card-back {
-            background-color: #115e59; /* teal-800 */
+            background-color: #115e59;
+            /* teal-800 */
             color: #fafaf9;
             transform: rotateY(180deg);
-            border-top: 4px solid #f59e0b; /* amber */
+            border-top: 4px solid #f59e0b;
+            /* amber */
         }
 
         /* Flow Animation for AI Section */
@@ -137,6 +151,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .flow-line {
             height: 6px;
             border-radius: 3px;
@@ -144,13 +159,20 @@
             background-size: 200% 100%;
             animation: flowAnim 2s linear infinite;
         }
+
         .flow-line.amber {
             background: linear-gradient(90deg, #e7e5e4 25%, #f59e0b 50%, #e7e5e4 75%);
             background-size: 200% 100%;
         }
+
         @keyframes flowAnim {
-            0% { background-position: 100% 0; }
-            100% { background-position: -100% 0; }
+            0% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: -100% 0;
+            }
         }
 
         /* Fade-in Utilities */
@@ -159,6 +181,7 @@
             transform: translateY(20px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
+
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
@@ -173,6 +196,7 @@
         }
     </style>
 </head>
+
 <body class="font-sans antialiased text-stone-800 relative">
 
     <!-- Navigation -->
@@ -196,10 +220,12 @@
     <!-- Hero Section -->
     <header class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center fade-in">
         <h1 class="text-4xl md:text-6xl font-serif font-bold text-stone-900 mb-6 leading-tight">
-            Intelligence is the <span class="text-teal-600 relative inline-block">Water<div class="absolute bottom-1 left-0 w-full h-3 bg-teal-200 -z-10 opacity-60"></div></span> of Society
+            Intelligence is the <span class="text-teal-600 relative inline-block">Water<div
+                    class="absolute bottom-1 left-0 w-full h-3 bg-teal-200 -z-10 opacity-60"></div></span> of Society
         </h1>
         <p class="text-xl text-stone-600 font-light mb-10 max-w-2xl mx-auto">
-            Just as the water cycle sustains biological life on Earth, the continuous flow, storage, and processing of intelligence sustains the social, cultural, and technological life of human society.
+            Just as the water cycle sustains biological life on Earth, the continuous flow, storage, and processing of
+            intelligence sustains the social, cultural, and technological life of human society.
         </p>
     </header>
 
@@ -209,7 +235,9 @@
             <div class="mb-12 text-center max-w-2xl mx-auto fade-in">
                 <h2 class="text-sm uppercase tracking-widest text-amber-600 font-bold mb-2">The Foundation</h2>
                 <h3 class="text-3xl font-serif text-stone-900">Defining the Cycle</h3>
-                <p class="mt-4 text-stone-600">The water cycle describes the continuous movement of water on, above, and below the Earth's surface. Let's examine how the flow of information mirrors this essential process.</p>
+                <p class="mt-4 text-stone-600">The water cycle describes the continuous movement of water on, above, and
+                    below the Earth's surface. Let's examine how the flow of information mirrors this essential process.
+                </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in">
@@ -217,22 +245,32 @@
                 <div class="p-8 rounded-2xl bg-stone-50 border border-stone-200 hover:shadow-lg transition-shadow">
                     <div class="text-teal-600 text-4xl mb-4 font-serif italic">H&#8322;O</div>
                     <h4 class="text-2xl font-bold mb-4 text-stone-900">The Biotic Lifeline</h4>
-                    <p class="text-stone-600 mb-4">Water is the universal solvent. It transports nutrients, regulates temperature, and creates the medium in which all cellular reactions occur. Without water, biological life stagnates and perishes.</p>
+                    <p class="text-stone-600 mb-4">Water is the universal solvent. It transports nutrients, regulates
+                        temperature, and creates the medium in which all cellular reactions occur. Without water,
+                        biological life stagnates and perishes.</p>
                     <ul class="space-y-2 text-sm text-stone-500 font-medium">
-                        <li>&#8226; <strong class="text-teal-700">Evaporation:</strong> Water lifting from the earth.</li>
-                        <li>&#8226; <strong class="text-teal-700">Condensation:</strong> Forming clouds in the atmosphere.</li>
-                        <li>&#8226; <strong class="text-teal-700">Precipitation:</strong> Falling back to nourish the soil.</li>
+                        <li>&#8226; <strong class="text-teal-700">Evaporation:</strong> Water lifting from the earth.
+                        </li>
+                        <li>&#8226; <strong class="text-teal-700">Condensation:</strong> Forming clouds in the
+                            atmosphere.</li>
+                        <li>&#8226; <strong class="text-teal-700">Precipitation:</strong> Falling back to nourish the
+                            soil.</li>
                     </ul>
                 </div>
                 <!-- Intelligence Side -->
                 <div class="p-8 rounded-2xl bg-amber-50 border border-amber-100 hover:shadow-lg transition-shadow">
                     <div class="text-amber-600 text-4xl mb-4 font-serif italic">i</div>
                     <h4 class="text-2xl font-bold mb-4 text-stone-900">The Social Lifeline</h4>
-                    <p class="text-stone-600 mb-4">Intelligence is the cognitive solvent. It transports ideas, regulates societal behavior, and creates the medium in which cultural and technological evolution occurs. Without it, society stagnates.</p>
+                    <p class="text-stone-600 mb-4">Intelligence is the cognitive solvent. It transports ideas, regulates
+                        societal behavior, and creates the medium in which cultural and technological evolution occurs.
+                        Without it, society stagnates.</p>
                     <ul class="space-y-2 text-sm text-stone-500 font-medium">
-                        <li>&#8226; <strong class="text-amber-700">Observation:</strong> Data lifting from physical events.</li>
-                        <li>&#8226; <strong class="text-amber-700">Synthesis:</strong> Forming concepts in the collective mind.</li>
-                        <li>&#8226; <strong class="text-amber-700">Application:</strong> Falling back as action to shape the world.</li>
+                        <li>&#8226; <strong class="text-amber-700">Observation:</strong> Data lifting from physical
+                            events.</li>
+                        <li>&#8226; <strong class="text-amber-700">Synthesis:</strong> Forming concepts in the
+                            collective mind.</li>
+                        <li>&#8226; <strong class="text-amber-700">Application:</strong> Falling back as action to shape
+                            the world.</li>
                     </ul>
                 </div>
             </div>
@@ -245,11 +283,13 @@
             <div class="mb-12 text-center max-w-2xl mx-auto fade-in">
                 <h2 class="text-sm uppercase tracking-widest text-teal-600 font-bold mb-2">Macro Systems</h2>
                 <h3 class="text-3xl font-serif text-stone-900">Planetary Reservoirs of Thought</h3>
-                <p class="mt-4 text-stone-600">Earth stores water in distinct macro systems. Society stores and moves intelligence in remarkably similar ways. <strong>Click the chart segments to explore the parallels.</strong></p>
+                <p class="mt-4 text-stone-600">Earth stores water in distinct macro systems. Society stores and moves
+                    intelligence in remarkably similar ways. <strong>Click the chart segments to explore the
+                        parallels.</strong></p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-in">
-                
+
                 <!-- Chart Container -->
                 <div class="w-full">
                     <div class="chart-container">
@@ -258,11 +298,13 @@
                 </div>
 
                 <!-- Dynamic Content Display -->
-                <div id="macro-details" class="glass-card p-8 rounded-2xl min-h-[300px] flex flex-col justify-center transition-all duration-300">
+                <div id="macro-details"
+                    class="glass-card p-8 rounded-2xl min-h-[300px] flex flex-col justify-center transition-all duration-300">
                     <div class="text-teal-600 text-5xl mb-4 text-center">&#10022;</div>
                     <h4 class="text-2xl font-bold text-center text-stone-900 mb-4">Select a source</h4>
                     <p class="text-stone-600 text-center text-lg leading-relaxed">
-                        Interact with the polar area chart to uncover the parallels between vast bodies of water and the vast structures of human intelligence.
+                        Interact with the polar area chart to uncover the parallels between vast bodies of water and the
+                        vast structures of human intelligence.
                     </p>
                 </div>
             </div>
@@ -275,11 +317,13 @@
             <div class="mb-16 text-center max-w-2xl mx-auto fade-in">
                 <h2 class="text-sm uppercase tracking-widest text-amber-600 font-bold mb-2">Micro Systems</h2>
                 <h3 class="text-3xl font-serif text-stone-900">Cellular Intelligence</h3>
-                <p class="mt-4 text-stone-600">At the individual level, biological organisms rely on micro-reservoirs of water. The human mind mirrors this with specific cognitive storage systems. <strong>Hover over the cards to translate biology into cognition.</strong></p>
+                <p class="mt-4 text-stone-600">At the individual level, biological organisms rely on micro-reservoirs of
+                    water. The human mind mirrors this with specific cognitive storage systems. <strong>Hover over the
+                        cards to translate biology into cognition.</strong></p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto fade-in">
-                
+
                 <!-- Card 1: Animals / Cytoplasm -->
                 <div class="flip-card group cursor-pointer">
                     <div class="flip-card-inner shadow-xl rounded-2xl">
@@ -287,15 +331,21 @@
                         <div class="flip-card-front">
                             <div class="text-5xl text-teal-600 mb-3">&#10052;</div>
                             <h4 class="text-xl font-bold text-stone-900">Cytoplasm & Body Fluids</h4>
-                            <p class="mt-2 text-sm text-stone-500 font-semibold uppercase tracking-wider">Animal Biology</p>
-                            <p class="mt-3 text-stone-600 text-sm">The highly dynamic, fast-moving intracellular fluid that constantly circulates nutrients, enables immediate chemical reactions, and responds rapidly to stimuli.</p>
+                            <p class="mt-2 text-sm text-stone-500 font-semibold uppercase tracking-wider">Animal Biology
+                            </p>
+                            <p class="mt-3 text-stone-600 text-sm">The highly dynamic, fast-moving intracellular fluid
+                                that constantly circulates nutrients, enables immediate chemical reactions, and responds
+                                rapidly to stimuli.</p>
                         </div>
                         <!-- Back -->
                         <div class="flip-card-back">
                             <div class="text-5xl text-amber-400 mb-3">&#9889;</div>
                             <h4 class="text-xl font-bold text-white">Working Memory & Fluid Intelligence</h4>
-                            <p class="mt-2 text-sm text-teal-200 font-semibold uppercase tracking-wider">Human Cognition</p>
-                            <p class="mt-3 text-teal-50 text-sm">The active mental workspace. It holds immediate facts, processes current social interactions, and handles rapid problem-solving. It must constantly flow to remain effective.</p>
+                            <p class="mt-2 text-sm text-teal-200 font-semibold uppercase tracking-wider">Human Cognition
+                            </p>
+                            <p class="mt-3 text-teal-50 text-sm">The active mental workspace. It holds immediate facts,
+                                processes current social interactions, and handles rapid problem-solving. It must
+                                constantly flow to remain effective.</p>
                         </div>
                     </div>
                 </div>
@@ -307,15 +357,21 @@
                         <div class="flip-card-front">
                             <div class="text-5xl text-teal-600 mb-3">&#9673;</div>
                             <h4 class="text-xl font-bold text-stone-900">Plant Vacuoles</h4>
-                            <p class="mt-2 text-sm text-stone-500 font-semibold uppercase tracking-wider">Plant Biology</p>
-                            <p class="mt-3 text-stone-600 text-sm">Large, static cellular sacs that store water, vital nutrients, and structural support for the long term. They sustain the plant during times of drought.</p>
+                            <p class="mt-2 text-sm text-stone-500 font-semibold uppercase tracking-wider">Plant Biology
+                            </p>
+                            <p class="mt-3 text-stone-600 text-sm">Large, static cellular sacs that store water, vital
+                                nutrients, and structural support for the long term. They sustain the plant during times
+                                of drought.</p>
                         </div>
                         <!-- Back -->
                         <div class="flip-card-back">
                             <div class="text-5xl text-amber-400 mb-3">&#10026;</div>
                             <h4 class="text-xl font-bold text-white">Long-Term Memory & Crystallized Intellect</h4>
-                            <p class="mt-2 text-sm text-teal-200 font-semibold uppercase tracking-wider">Human Cognition</p>
-                            <p class="mt-3 text-teal-50 text-sm">Our deep storage. It holds accumulated experiences, core beliefs, and learned skills. It provides mental structure and resilience during periods of intellectual scarcity or stress.</p>
+                            <p class="mt-2 text-sm text-teal-200 font-semibold uppercase tracking-wider">Human Cognition
+                            </p>
+                            <p class="mt-3 text-teal-50 text-sm">Our deep storage. It holds accumulated experiences,
+                                core beliefs, and learned skills. It provides mental structure and resilience during
+                                periods of intellectual scarcity or stress.</p>
                         </div>
                     </div>
                 </div>
@@ -327,23 +383,28 @@
     <!-- SECTION 4: AI as Synthetic Irrigation -->
     <section id="ai" class="py-20 px-4 bg-stone-900 text-stone-100 overflow-hidden relative">
         <!-- Abstract Background -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#0d9488 1px, transparent 1px); background-size: 30px 30px;"></div>
-        
+        <div class="absolute inset-0 opacity-10"
+            style="background-image: radial-gradient(#0d9488 1px, transparent 1px); background-size: 30px 30px;"></div>
+
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="mb-12 text-center max-w-2xl mx-auto fade-in">
-                <h2 class="text-sm uppercase tracking-widest text-teal-400 font-bold mb-2">Technological Intervention</h2>
+                <h2 class="text-sm uppercase tracking-widest text-teal-400 font-bold mb-2">Technological Intervention
+                </h2>
                 <h3 class="text-3xl font-serif text-white">The Synthetic Irrigation System</h3>
-                <p class="mt-4 text-stone-300">Historically, human intelligence relied on natural precipitation—reading books, attending universities. Artificial Intelligence acts as an advanced irrigation system, pumping intelligence from deep data oceans directly to the intellectual roots of individuals.</p>
+                <p class="mt-4 text-stone-300">Historically, human intelligence relied on natural precipitation—reading
+                    books, attending universities. Artificial Intelligence acts as an advanced irrigation system,
+                    pumping intelligence from deep data oceans directly to the intellectual roots of individuals.</p>
             </div>
 
             <!-- Interactive Diagram Box -->
             <div class="bg-stone-800 rounded-3xl p-8 border border-stone-700 max-w-4xl mx-auto fade-in shadow-2xl">
-                
+
                 <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 relative">
-                    
+
                     <!-- Source: The Data Ocean -->
                     <div class="text-center w-40 z-10">
-                        <div class="w-24 h-24 mx-auto bg-stone-700 rounded-full flex items-center justify-center border-4 border-teal-800 shadow-[0_0_20px_rgba(13,148,136,0.3)]">
+                        <div
+                            class="w-24 h-24 mx-auto bg-stone-700 rounded-full flex items-center justify-center border-4 border-teal-800 shadow-[0_0_20px_rgba(13,148,136,0.3)]">
                             <span class="text-3xl">&#8776;</span>
                         </div>
                         <h5 class="mt-4 font-bold text-teal-300">Data Oceans</h5>
@@ -353,12 +414,15 @@
                     <!-- Flow 1 -->
                     <div class="hidden md:block flex-1 px-4 relative">
                         <div class="flow-line w-full"></div>
-                        <div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-xs text-stone-500 font-mono">Extraction</div>
+                        <div
+                            class="absolute top-4 left-1/2 transform -translate-x-1/2 text-xs text-stone-500 font-mono">
+                            Extraction</div>
                     </div>
 
                     <!-- The Pump: AI -->
                     <div class="text-center w-48 z-10">
-                        <div class="w-32 h-32 mx-auto bg-stone-900 rounded-lg flex items-center justify-center border border-amber-500/50 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+                        <div
+                            class="w-32 h-32 mx-auto bg-stone-900 rounded-lg flex items-center justify-center border border-amber-500/50 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
                             <div class="text-center">
                                 <span class="text-4xl text-amber-500 block mb-1">&#9881;</span>
                                 <span class="text-xs font-mono text-amber-300 tracking-widest">LLM PUMP</span>
@@ -371,22 +435,29 @@
                     <!-- Flow 2 -->
                     <div class="hidden md:block flex-1 px-4 relative">
                         <div class="flow-line amber w-full"></div>
-                        <div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-xs text-stone-500 font-mono">Distribution</div>
+                        <div
+                            class="absolute top-4 left-1/2 transform -translate-x-1/2 text-xs text-stone-500 font-mono">
+                            Distribution</div>
                     </div>
 
                     <!-- Destination: Human Mind -->
                     <div class="text-center w-40 z-10">
-                        <div class="w-24 h-24 mx-auto bg-stone-700 rounded-full flex items-center justify-center border-4 border-amber-700 shadow-[0_0_20px_rgba(217,119,6,0.3)]">
+                        <div
+                            class="w-24 h-24 mx-auto bg-stone-700 rounded-full flex items-center justify-center border-4 border-amber-700 shadow-[0_0_20px_rgba(217,119,6,0.3)]">
                             <span class="text-3xl">&#10047;</span>
                         </div>
                         <h5 class="mt-4 font-bold text-teal-100">Human Mind</h5>
-                        <p class="text-xs text-stone-400 mt-1">Targeted, actionable insights received precisely when needed.</p>
+                        <p class="text-xs text-stone-400 mt-1">Targeted, actionable insights received precisely when
+                            needed.</p>
                     </div>
 
                 </div>
 
-                <div class="mt-10 p-6 bg-stone-900/50 rounded-xl border border-stone-700 text-sm text-stone-300 leading-relaxed text-center">
-                    "AI doesn't create the original water (data); it acts as the aqueducts and drip-irrigation networks. It ensures that the specific intellectual nutrients required for a task bypass geographic and systemic barriers, delivering concentrated understanding directly to the individual's mental soil."
+                <div
+                    class="mt-10 p-6 bg-stone-900/50 rounded-xl border border-stone-700 text-sm text-stone-300 leading-relaxed text-center">
+                    "AI doesn't create the original water (data); it acts as the aqueducts and drip-irrigation networks.
+                    It ensures that the specific intellectual nutrients required for a task bypass geographic and
+                    systemic barriers, delivering concentrated understanding directly to the individual's mental soil."
                 </div>
             </div>
         </div>
@@ -398,46 +469,61 @@
             <div class="mb-12 text-center max-w-2xl mx-auto fade-in">
                 <h2 class="text-sm uppercase tracking-widest text-red-600 font-bold mb-2">Diagnostics</h2>
                 <h3 class="text-3xl font-serif text-stone-900">Salty and Toxic Intellectual Soil</h3>
-                <p class="mt-4 text-stone-600">If irrigation is poorly managed, agricultural soil becomes salty (over-evaporation) or toxic (pollutants). Similarly, our minds can degrade through poor information habits. <strong>Take the diagnostic below.</strong></p>
+                <p class="mt-4 text-stone-600">If irrigation is poorly managed, agricultural soil becomes salty
+                    (over-evaporation) or toxic (pollutants). Similarly, our minds can degrade through poor information
+                    habits. <strong>Take the diagnostic below.</strong></p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 bg-white p-8 rounded-3xl shadow-sm border border-stone-200 fade-in">
-                
+            <div
+                class="grid grid-cols-1 md:grid-cols-5 gap-8 bg-white p-8 rounded-3xl shadow-sm border border-stone-200 fade-in">
+
                 <!-- Questionnaire -->
                 <div class="md:col-span-3 space-y-6">
                     <h4 class="text-xl font-bold text-stone-800 border-b pb-2">Assess Your Cognitive Soil</h4>
-                    <p class="text-sm text-stone-500 mb-6">Check the statements that apply to your recent habits. The gauge will measure your intellectual soil health.</p>
-                    
+                    <p class="text-sm text-stone-500 mb-6">Check the statements that apply to your recent habits. The
+                        gauge will measure your intellectual soil health.</p>
+
                     <form id="toxicity-form" class="space-y-4">
-                        <label class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
+                        <label
+                            class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
                             <input type="checkbox" class="soil-check mt-1 w-5 h-5 accent-red-600" value="15">
                             <div>
                                 <span class="block font-semibold text-stone-800">High Evaporation (Salinization)</span>
-                                <span class="text-sm text-stone-600">I consume massive amounts of information daily (doomscrolling/podcasts) but rarely output, apply, or create anything from it.</span>
+                                <span class="text-sm text-stone-600">I consume massive amounts of information daily
+                                    (doomscrolling/podcasts) but rarely output, apply, or create anything from
+                                    it.</span>
                             </div>
                         </label>
 
-                        <label class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
+                        <label
+                            class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
                             <input type="checkbox" class="soil-check mt-1 w-5 h-5 accent-red-600" value="20">
                             <div>
                                 <span class="block font-semibold text-stone-800">Echo Chamber (Alkalinity)</span>
-                                <span class="text-sm text-stone-600">I become deeply angry or defensive when exposed to viewpoints outside my standard media diet. I cannot change my mind.</span>
+                                <span class="text-sm text-stone-600">I become deeply angry or defensive when exposed to
+                                    viewpoints outside my standard media diet. I cannot change my mind.</span>
                             </div>
                         </label>
 
-                        <label class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
+                        <label
+                            class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
                             <input type="checkbox" class="soil-check mt-1 w-5 h-5 accent-red-600" value="25">
                             <div>
-                                <span class="block font-semibold text-stone-800">Algorithmic Toxicity (Pollutants)</span>
-                                <span class="text-sm text-stone-600">I frequently share or react to sensationalized, unverified claims because they validate my existing cynicism about society.</span>
+                                <span class="block font-semibold text-stone-800">Algorithmic Toxicity
+                                    (Pollutants)</span>
+                                <span class="text-sm text-stone-600">I frequently share or react to sensationalized,
+                                    unverified claims because they validate my existing cynicism about society.</span>
                             </div>
                         </label>
 
-                        <label class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
+                        <label
+                            class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 cursor-pointer border border-transparent transition-colors">
                             <input type="checkbox" class="soil-check mt-1 w-5 h-5 accent-red-600" value="20">
                             <div>
-                                <span class="block font-semibold text-stone-800">Intellectual Fatigue (Compaction)</span>
-                                <span class="text-sm text-stone-600">I feel too exhausted to engage in deep reading or complex problem solving. New ideas bounce off me without penetrating.</span>
+                                <span class="block font-semibold text-stone-800">Intellectual Fatigue
+                                    (Compaction)</span>
+                                <span class="text-sm text-stone-600">I feel too exhausted to engage in deep reading or
+                                    complex problem solving. New ideas bounce off me without penetrating.</span>
                             </div>
                         </label>
                     </form>
@@ -446,7 +532,7 @@
                 <!-- Chart & Feedback Container -->
                 <div class="md:col-span-2 flex flex-col items-center justify-center bg-stone-100 rounded-2xl p-6">
                     <h5 class="text-center font-bold text-stone-700 mb-2">Soil Health Gauge</h5>
-                    
+
                     <div class="chart-container w-full" style="height: 200px; max-height: 200px;">
                         <canvas id="gaugeChart"></canvas>
                     </div>
@@ -462,7 +548,12 @@
     </section>
 
     <footer class="bg-stone-900 text-stone-500 py-8 text-center text-sm border-t border-stone-800">
-        <p>Coginitive Hydrology</p>
+        <div class="mt-4 mb-4">
+            <a href="/articles/pdf/intelligence_cycle.pdf" target="_blank"
+                class="inline-block border border-[#C05640] text-[#C05640] font-bold py-3 px-8 rounded hover:bg-[#C05640] hover:text-white transition cursor-pointer">
+                Read Full Essay
+            </a>
+        </div>
         <p>@Sushant Pradhan | 20th Mar, 2026</p>
     </footer>
 
@@ -535,7 +626,7 @@
                         legend: { position: 'right', labels: { font: { family: 'Inter' } } },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     return context.label + ' - Click to learn more';
                                 }
                             }
@@ -556,10 +647,10 @@
             function updateMacroDetails(index) {
                 const detailsBox = document.getElementById('macro-details');
                 const content = macroDataContent[index];
-                
+
                 // Animate out
                 detailsBox.style.opacity = 0;
-                
+
                 setTimeout(() => {
                     detailsBox.innerHTML = `
                         <div class="text-teal-600 text-5xl mb-4 text-center">${content.icon}</div>
@@ -576,10 +667,10 @@
                3. Soil Toxicity Gauge Chart & Logic (Chart.js Doughnut)
             ----------------------------------------------------------- */
             const ctxGauge = document.getElementById('gaugeChart').getContext('2d');
-            
+
             // Initial State: 100% Healthy (Green)
             let currentToxicity = 0;
-            
+
             const gaugeChart = new Chart(ctxGauge, {
                 type: 'doughnut',
                 data: {
@@ -621,9 +712,9 @@
                     // Update Chart Data
                     gaugeChart.data.datasets[0].data[0] = totalToxicity;
                     gaugeChart.data.datasets[0].data[1] = 100 - totalToxicity;
-                    
+
                     // Dynamic Color change based on severity
-                    if(totalToxicity < 20) {
+                    if (totalToxicity < 20) {
                         gaugeChart.data.datasets[0].backgroundColor[0] = '#f59e0b'; // amber
                     } else if (totalToxicity < 50) {
                         gaugeChart.data.datasets[0].backgroundColor[0] = '#ea580c'; // orange
@@ -658,4 +749,5 @@
         });
     </script>
 </body>
+
 </html>
